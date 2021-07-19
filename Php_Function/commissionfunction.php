@@ -236,6 +236,7 @@ if ($connection->query($sql_add_commission_form) === TRUE) {
     $AddToDatabase = true;
     proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id);
     echo "Success! adding to database";
+    /** Success on adding to database*/
 } else {
 echo "Error: " . $sql_add_commission_form . "<br>" . $connection->error;
 ?>
