@@ -229,7 +229,7 @@ if($note == "" || $note == null){
 
 $sql_add_commission_form = "INSERT INTO service_commissions (cust_id, date,personnel,partner,size,type,plate,discount,promo_code,discount_notes,additional_charge_type,additional_notes,discount_amount,others_amount,vat,total,time,edit_logs) 
 VALUES ('$job_listing_id', '$date_serviced', '$name_of_personnel', '$tag_personnel', '$car_size', '$package_type', '$plate_number', '$discount', 
-'$promo_code', '$final_promo_reason', ' $additional_option', '$final_note', '$discount_amount', '$other_amount', '$vat', '$total','$time_serviced','none')";
+'$promo_code', '$final_promo_reason', '$additional_option', '$final_note', '$discount_amount', '$other_amount', '$vat', '$total','$time_serviced','none')";
 
 if ($connection->query($sql_add_commission_form) === TRUE) {
     //header("Location: ../CC-client_dashboard.php");

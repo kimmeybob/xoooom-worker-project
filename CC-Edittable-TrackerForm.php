@@ -504,8 +504,8 @@ smaller than 560
 
 
     <div class="form-group" >
-    <div id="discount_reason_container" style="position: relative;display: none;" class="form-group" >
-        <div style="float:left; width: 180%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 5%;padding-left: 2%;border-radius: 15px;" >
+    <div id="discount_reason_container" style="position: relative;display: none;width: 100%;" class="form-group" >
+        <div style="float:left; width: 100%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 5%;padding-left: 2%;border-radius: 15px;" >
         <label style="color: #868686;font-size: 12px;" for="discountreason"> &nbsp;&nbsp;Discount Reason</label>
         <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo_reason" name="promo_reason" placeholder="Enter discount reason here. (Disregard if none)">
         </div>
@@ -546,8 +546,8 @@ smaller than 560
       </div>
     </div>
 
-    <div id="additionals_container" style="position: relative;display: none;" class="form-group">
-        <div style="float:left; width: 180%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
+    <div id="additionals_container" style="position: relative;display: none;width: 100%;" class="form-group">
+        <div style="float:left; width: 100%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
         <label id="label_additionals" style="color: #868686;font-size: 12px;"></label>
        
         <input onkeyup="others_billing()" style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" type="number" min="0" id="additional_amount" name="additional_amount" placeholder="Enter Amount here." value="">
