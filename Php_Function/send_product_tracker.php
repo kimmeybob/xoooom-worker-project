@@ -220,12 +220,14 @@ function setAlert() {
     $promo_reason_value = "none";
     $customer_name = "";
 
+    //Checks if promo code is empty
     if($promo_code == ""){
         
     }else{
         $promo_code_value = $promo_code;
     }
 
+    //checks if reason_promo is empty
     if($reason_promo == ""){
 
     }else{
@@ -233,11 +235,16 @@ function setAlert() {
     }
 
    
+    // Checks if Default testing account is used.
     if($job_product_ID_link = "0"){
         $customer_name =  $personnel;
     }else{
         $customer_name =  $personnel;
     }
+
+    
+
+
     
 
     if($wax_quantity != 0){
