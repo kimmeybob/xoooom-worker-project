@@ -168,8 +168,22 @@ smaller than 560
 
 </style>
 
-<body>
-    <body>
+    <body onload="<?php 
+                if($job_listing_id == 0){
+                  echo "";
+                }else{
+                  echo "set_main_personnel()";
+                }?>">
+    
+    <script>
+      //For debugging display
+
+      // check_local_storage_values();
+
+      // function check_local_storage_values(){
+      //   alert("Date: "+localStorage.getItem("date_serviced")+"\n Time: "+localStorage.getItem("time_serviced")+"\n Worker: "+localStorage.getItem("workers")+"\n Partner: "+localStorage.getItem("tag_workers")+"\n Plate Number: "+localStorage.getItem("platenumber")+"\n Size: "+localStorage.getItem("car_size_details")+"\n Type: "+localStorage.getItem("package_type")+"\n Discount: "+localStorage.getItem("discounts")+"\n Discount Reason: "+localStorage.getItem("promo_reason")+"\n Additional Charge Type: "+localStorage.getItem("additionals")+"\n Others Amount: "+localStorage.getItem("additional_amount")+"\n Others Note: "+localStorage.getItem("note"));
+      // }
+    </script>
         <div style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;">
                 <p style="font-weight: bold;background: white;margin:0;overflow: hidden;font-size: 20px;">Product Purchase Tracker</p>
@@ -190,9 +204,10 @@ smaller than 560
         <div style="height: 1px; width: 100%; background: #D3D3D3;margin-top: 5%;position: relative;display: inline-block;">        
         </div>
         
-        <div style="color:#868686;margin-top: 5%;margin-left: 5%;font-size: 12px;">
+        <div style="color:#868686;margin-top: 5%;margin-left: 5%;font-size: 12px;"> 
             Product Order ID
         </div>
+        <!-- LINK:  -->
         <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>" method="post">
         <div>
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;margin-left: 5%;">
@@ -203,7 +218,7 @@ smaller than 560
                 }else{
                   echo "CUSTRK-$job_listing_id";
                 }
-                 ?>" readonly>
+                 ?>" readonly>  
             </div>
             <div style="float: right; width: auto;position: relative;display: inline-block;margin-right: 5%;">
                 <p style="width: auto;background: white;margin:0;overflow: hidden;"><a href="#back" style="color: black;font-size: 14px"></a></p>
@@ -269,16 +284,17 @@ smaller than 560
         </div> 
     </div> -->
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
-      <div style="background: #0179F1;float: left;display: inline-block;height: 100%;width:2%;">
-          <!-- Insert Image here -->
+      <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
+          <!-- Insert Image here #0179F1; -->
+          <p style="background: white;color: #0179F1;font-weight: bold;font-size: 16px;margin-top: 20%;padding-bottom: 5px;border: 1.5px solid #0179F1;border-radius: 5px;">₱499</p>
           
       </div> 
-      <div style="background: white;float: left;display: block;height: 100%;width:80%;display: inline-block;margin-left: 5%;">
-          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 16px;">Wax - (500ml)</span>
+      <div style="background: white;float: left;display: block;height: 100%;width:60%;display: inline-block;margin-left: 5%;">
+          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 14px;">Wax - (500ml)</span>
           
           <div style="margin-left: 2%;background:#F0F0F0;width: 40%;display: block;text-align: center;margin-top: 2%;">
          
-          <span onclick="minus_wax()" style="padding-left: 10%;padding-right: 10%;padding-top: 5%;padding-bottom: 5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="minus_wax()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_wax_value = 0;
               function minus_wax(){
@@ -296,7 +312,7 @@ smaller than 560
 
           <input type="number" name="wax_quantity" value="0" maxlength="2" min="0" id="wax_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
           
-          <span onclick="add_wax()" style="padding-left: 10%;padding-right: 10%;padding-top: 2.5%;padding-bottom: 2.5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="add_wax()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
               function add_wax(){
                 var wax_value = document.getElementById("wax_quantity").value ;
@@ -321,16 +337,17 @@ smaller than 560
 
 
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
-      <div style="background: #0179F1;float: left;display: inline-block;height: 100%;width:2%;">
+      <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
           <!-- Insert Image here -->
-          
+          <p style="background: white;color: #0179F1;font-weight: bold;font-size: 16px;margin-top: 20%;padding-bottom: 5px;border: 1.5px solid #0179F1;border-radius: 5px;">₱499</p>
+
       </div> 
-      <div style="background: white;float: left;display: block;height: 100%;width:80%;display: inline-block;margin-left: 5%;">
-          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 16px;">Engine Shine - (500ml)</span>
+      <div style="background: white;float: left;display: block;height: 100%;width:60%;display: inline-block;margin-left: 5%;">
+          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 14px;">Engine Shine - (500ml)</span>
           
           <div style="margin-left: 2%;background:#F0F0F0;width: 40%;display: block;text-align: center;margin-top: 2%;">
          
-          <span onclick="minus_engine_shine()" style="padding-left: 10%;padding-right: 10%;padding-top: 5%;padding-bottom: 5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="minus_engine_shine()" style="3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_engine_shine_value = 0;
               function minus_engine_shine(){
@@ -349,7 +366,7 @@ smaller than 560
           
           <input type="number" name="engine_shine_quantity" value="0" maxlength="2" min="0" id="engine_shine_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
           
-          <span onclick="add_engine_shine()" style="padding-left: 10%;padding-right: 10%;padding-top: 2.5%;padding-bottom: 2.5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="add_engine_shine()" style="3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
          
               function add_engine_shine(){
@@ -374,16 +391,17 @@ smaller than 560
 
 
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
-      <div style="background: #0179F1;float: left;display: inline-block;height: 100%;width:2%;">
+      <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
           <!-- Insert Image here -->
-          
+          <p style="background: white;color: #0179F1;font-weight: bold;font-size: 16px;margin-top: 20%;padding-bottom: 5px;border: 1.5px solid #0179F1;border-radius: 5px;">₱499</p>
+
       </div> 
-      <div style="background: white;float: left;display: block;height: 100%;width:80%;display: inline-block;margin-left: 5%;">
-          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 16px;">Engine Degreaser - (500ml)</span>
+      <div style="background: white;float: left;display: block;height: 100%;width:60%;display: inline-block;margin-left: 5%;">
+          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 14px;">Engine Degreaser - (500ml)</span>
           
           <div style="margin-left: 2%;background:#F0F0F0;width: 40%;display: block;text-align: center;margin-top: 2%;">
          
-          <span onclick="minus_egd()" style="padding-left: 10%;padding-right: 10%;padding-top: 5%;padding-bottom: 5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="minus_egd()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_egd_value = 0;
               function minus_egd(){
@@ -401,7 +419,7 @@ smaller than 560
 
           <input type="number" name="engine_degreaser_quantity" value="0" min="0" id="engine_degreaser_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
           
-          <span onclick="add_egd()" style="padding-left: 10%;padding-right: 10%;padding-top: 2.5%;padding-bottom: 2.5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="add_egd()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           
               function add_egd(){
@@ -426,16 +444,18 @@ smaller than 560
 
 
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
-      <div style="background: #0179F1;float: left;display: inline-block;height: 100%;width:2%;">
+      <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
           <!-- Insert Image here -->
+          <p style="background: white;color: #0179F1;font-weight: bold;font-size: 16px;margin-top: 20%;padding-bottom: 5px;border: 1.5px solid #0179F1;border-radius: 5px;">₱299</p>
+
           
       </div> 
-      <div style="background: white;float: left;display: block;height: 100%;width:80%;display: inline-block;margin-left: 5%;">
-          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 16px;">Freshener - (250ml)</span>
+      <div style="background: white;float: left;display: block;height: 100%;width:60%;display: inline-block;margin-left: 5%;">
+          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 14px;">Freshener - (250ml)</span>
           
           <div style="margin-left: 2%;background:#F0F0F0;width: 40%;display: block;text-align: center;margin-top: 2%;">
          
-          <span onclick="minus_freshener()" style="padding-left: 10%;padding-right: 10%;padding-top: 5%;padding-bottom: 5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="minus_freshener()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_freshener_value = 0;
               function minus_freshener(){
@@ -453,7 +473,7 @@ smaller than 560
           <input type="number" name="freshener_quantity" value="0" maxlength="2" min="0" id="freshener_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;"  value="0" readonly/>
           
           
-          <span onclick="add_freshener()" style="padding-left: 10%;padding-right: 10%;padding-top: 2.5%;padding-bottom: 2.5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="add_freshener()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
          
               function add_freshener(){
@@ -478,16 +498,18 @@ smaller than 560
 
 
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
-      <div style="background: #0179F1;float: left;display: inline-block;height: 100%;width:2%;">
+      <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
           <!-- Insert Image here -->
+          <p style="background: white;color: #0179F1;font-weight: bold;font-size: 16px;margin-top: 20%;padding-bottom: 5px;border: 1.5px solid #0179F1;border-radius: 5px;">₱299</p>
+
           
       </div> 
-      <div style="background: white;float: left;display: block;height: 100%;width:80%;display: inline-block;margin-left: 5%;">
-          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 16px;">Watermarks Remover - (250ml)</span>
+      <div style="background: white;float: left;display: block;height: 100%;width:60%;display: inline-block;margin-left: 5%;">
+          <span style="padding-left: 4%;font-weight: normal;background: white;font-weight: normal;font-size: 14px;">WM Remover - (250ml)<br><empty style="padding-left:4%;font-size: 12px;margin:0;overflow:hidden;color: gray;">*Watermark Remover</empty></span>
           
           <div style="margin-left: 2%;background:#F0F0F0;width: 40%;display: block;text-align: center;margin-top: 2%;">
          
-          <span onclick="minus_wmremove()" style="padding-left: 10%;padding-right: 10%;padding-top: 5%;padding-bottom: 5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="minus_wmremove()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_wmremove_value = 0;
               function minus_wmremove(){
@@ -504,7 +526,7 @@ smaller than 560
           </script>
           <input type="number" name="water_remover_quantity" value="0" maxlength="2" min="0" id="water_remover_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;"  value="0" readonly/>
           
-          <span onclick="add_wmremove()" style="padding-left: 10%;padding-right: 10%;padding-top: 2.5%;padding-bottom: 2.5%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
+          <span onclick="add_wmremove()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_wmremove_value = 0;
               function add_wmremove(){
@@ -623,16 +645,16 @@ smaller than 560
       </div>
     </div>
 
-    <div id="discount_promo_code" style="position: relative;display: none;" class="form-group">
+    <div id="discount_promo_code" style="position: relative;display: none;height:0px;" class="form-group">
         <div style="float:left; width: 200%;position: relative;display: none;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
         <label style="color: #868686;font-size: 12px;" for="promocode">Promo Code</label>
-        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo" name="promo" placeholder="Enter promo code here. (Disregard if none)" value="none">
+        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo_code" name="promo" placeholder="Enter promo code here. (Disregard if none)" value="none">
         </div>
     </div>
 
-    <div id="discount_reason_container" style="position: relative;display: none;" class="form-group" >
-        <div style="float:left; width: 200%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;" >
-        <label style="color: #868686;font-size: 12px;" for="discountreason">Discount Reason Code</label>
+    <div id="discount_reason_container" style="position: relative;display: none;width: 100%;" class="form-group" >
+        <div style="float:left; width: 100%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 0%;padding-right: 2%;padding-left: 2%;border-radius: 15px;" >
+        <label style="color: #868686;font-size: 12px;" for="discountreason">Discount Reason</label>
         <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo" name="promo_reason" placeholder="Enter discount reason here. (Disregard if none)">
         </div>
     </div>
@@ -676,8 +698,7 @@ smaller than 560
 
     <br>
     <div style="width: 100%; height: 0.1vh; background: #DCDCDC;overflow:hidden;margin-bottom: 10%;"></div>
-    
-      <input class="btn btn-primary btn-lg btn-block" style="background-color:black;border-color:black;font-size:16px;border-radius: 100px;" type="submit"></input>
+      <input class="btn btn-primary btn-lg btn-block" style="background-color:black;border-color:black;font-size:16px;border-radius: 100px;" type="submit" value="Submit"/>
     </form>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -754,7 +775,29 @@ smaller than 560
     })
 });
   </script>
+<script>
+                  
+  var local_storage_tag_worker = localStorage.getItem("tag_workers");
+  //alert(local_storage_worker, local_storage_tag_worker);
 
+  function set_main_personnel(){
+    var local_storage_worker = localStorage.getItem("workers");
+      //alert("Running");
+    var selected_personnel_main = local_storage_worker;
+    var default_personnel_main = document.getElementById("workers").getElementsByTagName("option");
+    
+    for (var i = 0; i < default_personnel_main.length; i++) {
+
+        if(selected_personnel_main == default_personnel_main[i].value){
+        
+          document.getElementById('workers').getElementsByTagName('option')[i].selected = 'selected';
+        }else{
+            //default_personnel_main[i].disabled = true;
+            
+        }
+    }
+  }
+</script>
 <script type="text/javascript">
 var wax_subtotal = 0;
 var engine_shine_subtotal = 0;
@@ -772,8 +815,73 @@ function submission_check(){
           alert("Please select a personnel.");
           return false;
         }else{
-          display_page_Loading();
-          return true;
+         
+            if (typeof(Storage) !== "undefined") {
+              // data storage Set Data
+              //date
+              var mDateProducts = document.getElementById("date").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_date", mDateProducts);
+              //Personnel
+              var mWorkerProducts = document.getElementById("workers").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_workers", mWorkerProducts);
+              //Wax Quantity
+              var mWax = document.getElementById("wax_quantity").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_wax_quantity", mWax);
+              //Engine Shine Quantity
+              var mEngineShine = document.getElementById("engine_shine_quantity").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_engine_shine_quantity", mEngineShine);
+              //Engine Degreaser Quantity
+              var mEngine_Degreaser = document.getElementById("engine_degreaser_quantity").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_engine_degreaser_quantity", mEngine_Degreaser);
+              //Freshener Quantity
+              var mFreshener = document.getElementById("freshener_quantity").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_freshener_quantity", mFreshener);
+              //Watermark Remover Quantity
+              var mWatermarkRemover = document.getElementById("water_remover_quantity").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_water_remover_quantity", mWatermarkRemover);
+              //Discount Percentage
+              var mDiscount = document.getElementById("discounts").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_discounts", mDiscount);
+              //Discount Reason
+              var mDiscountReason = document.getElementById("promo").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_promo", mDiscountReason);
+              //Note
+              var mNote = document.getElementById("note").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("products_note", mNote);
+              
+             
+              
+              //Subtotal Amount
+              var mSubtotalAmount = document.getElementById("additional_other_amount").value;
+              localStorage.setItem("products_subtotal_amount", mSubtotalAmount);
+              //For Discount Percentage use the discount var above.
+              //Discount Amount
+              var mDiscountAmount = document.getElementById("additional_discount_amount").value;
+              localStorage.setItem("products_additional_discount_amount", mDiscountAmount);
+              //VAT
+              var mVat = document.getElementById("additional_vat_amount").value;
+              localStorage.setItem("products_additional_vat_amount", mVat);
+              //Total
+              var mTotal = document.getElementById("additional_sub_total").value;
+              localStorage.setItem("products_additional_sub_total", mTotal);
+
+              return true;
+            } else {
+              alert("Sorry, your browser does not support Web Storage.");
+              alert("Please update your current browser in order to use this web app.");
+              return true;
+            }  
+            
         }
        
 }
