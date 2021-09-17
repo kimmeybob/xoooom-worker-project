@@ -36,7 +36,7 @@ if(isset($_GET['return_link'])){
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 2%; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -247,7 +247,7 @@ smaller than 560
 <?php 
         require 'Admin/database_config.php';
 
-        $query_date = "Select * from service_commissions where cust_id = $job_listing_id;";
+        $query_date = "Select *, customer.Name, customer.contactNum from service_commissions left join customer on customer.customer_id = service_commissions.cust_id where service_commissions.cust_id = $job_listing_id;";
         $query_run_date = mysqli_query($connection, $query_date);
         $check_job_orders_date = mysqli_num_rows($query_run_date) > 0;
 
@@ -262,6 +262,8 @@ smaller than 560
         $additional_charges = "";
         $others_amount = "";
         $others_note = "";
+        $customer_contactNum = "";
+        $customer_name = "";
 
         while($row = mysqli_fetch_array($query_run_date)){
           $job_order_date = $row['date'];
@@ -276,6 +278,8 @@ smaller than 560
           $additional_charges = $row['additional_charge_type'];
           $others_amount = $row['others_amount'];
           $others_note = $row['additional_notes'];
+          $customer_contactNum = $row['contactNum'];
+          $customer_name = $row['Name'];
         }
 
         /*echo "<br> Job Order Date: $job_order_date
@@ -347,7 +351,7 @@ smaller than 560
       
         <div style="width: 100%;display: inline-block;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
         <label style="color: #868686;font-size: 12px;" for="Time">Date</label>
-        <input style="background:white;border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" value="<?php echo $job_order_date;?>" placeholder="mmmm" id="time_serviced" name="date_serviced" readonly>
+        <input style="background:white;border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" value="<?php echo $job_order_date;?>" placeholder="mmmm" id="date_serviced" name="date_serviced" readonly>
         </div>
       </div>
 
@@ -366,8 +370,8 @@ smaller than 560
                 <option id="rodel_macas" value="<?php echo "Rodel Macas";?>">
                     <?php echo "Rodel Macas";?>
                 </option>
-                <option id="jeck_sila" value="<?php echo "Jeck Sila";?>">
-                    <?php echo "Jeck Sila";?>
+                <option id="ruben_macas_jr" value="<?php echo "Ruben Macas Jr";?>">
+                    <?php echo "Ruben Macas Jr";?>
                 </option>
                 <option id="michelle_bontong" value="<?php echo "Michelle Bontong";?>">
                     <?php echo "Michelle Bontong";?>
@@ -386,8 +390,8 @@ smaller than 560
                 <option disabled="true" id="tag_rodel_macas" value="<?php echo "Rodel Macas";?>">
                     <?php echo "Rodel Macas";?>
                 </option>
-                <option disabled="true" id="tag_jeck_sila" value="<?php echo "Jeck Sila";?>">
-                    <?php echo "Jeck Sila";?>
+                <option disabled="true" id="tag_ruben_macas_jr" value="<?php echo "Ruben Macas Jr";?>">
+                    <?php echo "Ruben Macas Jr";?>
                 </option>
                 <option disabled="true" id="tag_michelle_bontong" value="<?php echo "Michelle Bontong";?>">
                     <?php echo "Michelle Bontong";?>
@@ -625,7 +629,7 @@ smaller than 560
 <br>
 
 <br>
-    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=true" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
+    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=true&return_link=<?php echo $return_link;?>" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
       
     <div style="width: 80%;margin-left:10%;padding-bottom: 0.5%;background: white;margin-top: 4%;">
         <p style="float:left;display: block;width:49%;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;margin-left:0%;" id="myBtn">view order</p>
@@ -1718,22 +1722,20 @@ function DisplayProductItems(){
           if(String(car_size_select_value) == "Small"){
             document.getElementById("ul_text_size").innerHTML = "";
             document.getElementById("ul_text_size_two").innerHTML = "";
-            //document.getElementById("display_car_size_details").innerHTML = " <ul id='ul_text_size' style='font-size: 12px;width: 50%;float: left;background: white;'><li style='List-style-type: none;'><b>TOYOTA</b></li><li>Wigo</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>MITSUBISHI</b></li><li>Mirage (Hatccback)</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>NISSAN</b></li><li>March</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>SUZUKI</b></li><li>Calerio</li><li>Alto</li></ul><ul id='ul_text_size' style='font-size: 12px;width: 50%;float: left;background: white;'><li style='List-style-type: none;'><b>HYUNDAI</b></li><li>Eon</li><li>Getz</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>KIA</b></li><li>Picanto</li><li>Pride</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>CHEVROLET</b></li><li>Pride</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>CHEVROLET</b></li><li>Spark</li></ul>";
         
           }else if(String(car_size_select_value) == "Medium"){
             document.getElementById("ul_text_size").innerHTML = "";
             document.getElementById("ul_text_size_two").innerHTML = "";
-            //document.getElementById("display_car_size_details").innerHTML = "<ul id='ul_text_size' style='font-size: 12px;width: 50%;float: left;background: white;'><li style='List-style-type: none;'><b>TOYOTA</b></li><li>Vios</li><li>86</li><li>Corolla</li><li>Altis</li><li>Camry</li><li>Bb</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>MITSUBISHI</b></li><li>Lancer</li><li>Mirage G4 (Sedan)</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>NISSAN</b></li><li>GT-R</li><li>Skyline</li><li>Juke</li><li>Sentra</li><li>Almera</li><li>Silvia</li><li>350z/370z</li><li>Cube</li><li>Sylphy</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>SUZUKI</b></li><li>Jimny</li><li>Swift</li><li>Dzire</li><li>Ciaz</li><li>S-Presso</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>HONDA</b></li><li>Civic</li><li>Jazz/Fit</li><li>City</li><li>Accord</li><li>Brio Amaze</li><li>Integra</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>HYUNDAI</b></li><li>Accent</li><li>l10</li><li>Elantra</li><li>Veloster</li><li>Sonata</li><li>Genesis</li><li>Retina</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>KIA</b></li><li>Rio</li><li>Soul</li><li>Forte</li><li>Optima</li><li>Avella</li><li>Cerato</li><li>Soluto</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>CHEVROLET</b></li><li>Camaro</li><li>Corvette</li><li>Cruze</li><li>Sail</li><li>Sonic</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>BMW</b></li><li>BMW 2 Series</li><li>BMW 2 Series</li><li>BMW 4 Series</li><li>BMW 5 Series</li><li>BMW 6 Series</li><li>BMW 7 Series</li><li>M3</li><li>M4</li><li style='List-style-type: none;'><br></li><li style="List-style-type: none;"><b>FORD</b></li><li>Ecosport</li><li>Ford Fiesta</li><li>Focus</li><li>Mustang</li><li style='List-style-type: none;'><br></li><li style="List-style-type: none;"><b>MAZDA</b></li><li>Mazda 3</li><li>MX-3</li><li>Mazda 2 (hatch/sedan)</li><li>Mazda 6</li><li>Mazda 5</li><li style='List-style-type: none;'><br></li></ul><ul id='ul_text_size_two' style='font-size: 12px;width: 50%;float: left;background: white;'><li style='List-style-type: none;'><b>MERCEDES</b></li><li>A Class</li><li>AMG CT</li><li>C63 AMG</li><li>CLA/CLS Class</li><li>E Class</li><li>S Class</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>MG</b></li><li>MG 6</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>SUBARU</b></li><li>BRZ</li><li>impreza (sedan)</li><li>Legacy</li><li>WRX STI</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>VOLKSWAGEN</b></li><li>Lamando</li><li>Lavida</li><li>Passat</li><li>Santana</li><li style='List-style-type: none;'><br></li><li style='List-style-type: none;'><b>PEUGEOT</b></li><li>308 hatchback</li><li>508</li></ul>";
+            
         
           }else if(String(car_size_select_value) == "Large"){
             document.getElementById("ul_text_size").innerHTML = "";
             document.getElementById("ul_text_size_two").innerHTML = "";
-            //document.getElementById("display_car_size_details").innerHTML = "<ul style='font-size: 14px;'><li><b>TOYOTA</b> - Fortune<r/li> <li><b>TOYOTA</b> - Hillux/ Conquest</li> <li><b>TOYOTA</b> - Rush</li> <li><b>TOYOTA</b> - Innova</li> <li><b>TOYOTA</b> - Revo</li> <li><b>TOYOTA</b> - Rav4</li> <li><b>TOYOTA</b> - Land Cruiser/Prado</li> <li><b>TOYOTA</b> - Tamarraw FX </li> <li><b>TOYOTA</b> - CH-R </li> <li><b>TOYOTA</b> - FJ Cruiser </li> <li><b>TOYOTA</b> - Avanza </li> <li><b>MITSUBISHI</b> - Xpander</li> <li><b>MITSUBISHI</b> - Adventure</li> <li><b>MITSUBISHI</b> - Montero Sport</li> <li><b>MITSUBISHI</b> - Strada</li> <li><b>MITSUBISHI</b> - Pajero</li> <li><b>MITSUBISHI</b> - ASX</li> <li><b>NISSAN</b> - Navarra</li> <li><b>NISSAN</b> - Terra</li> <li><b>NISSAN</b> - Patrol</li> <li><b>NISSAN</b> - Frontier</li> <li><b>NISSAN</b> - X-Trail</li> </ul>";
             
           }else if(String(car_size_select_value) == "Extra Large"){
             document.getElementById("ul_text_size").innerHTML = "";
             document.getElementById("ul_text_size_two").innerHTML = "";
-            //document.getElementById("display_car_size_details").innerHTML = "<ul style='font-size: 14px;'><li><b>TOYOTA</b> - Hi-Ace</li> <li><b>TOYOTA</b> - Commuter</li> <li><b>TOYOTA</b> - Alphard</li> <li><b>TOYOTA</b> - Super Granda</li> <li><b>MITSUBISHI</b> - L300</li> <li><b>NISSAN</b> - Urvan</li> </ul>";
+         
         
           }
       }
@@ -1806,34 +1808,69 @@ function DisplayProductItems(){
                 //others_billing();
 
             }
-</script> 
+</script>
+<script>
+function cache_all_form_date(){
+  // Check browser support
+  
+  if (typeof(Storage) !== "undefined") {
+    // data storage Set Data
+    //SAMPLE: localStorage.setItem("date_serviced", mDate);
+    //worker tracker bind id
+    localStorage.setItem("service_order_bind_id", <?php echo $job_listing_id;?>);
+    //date
+    var mDate = document.getElementById("date_serviced").value;
+    //alert("Date: "+mDate);
+    localStorage.setItem("date_serviced", mDate);
+    //scheduled time
+    var mTime = document.getElementById("time_serviced").value;
+    localStorage.setItem("time_serviced", mTime);
+    //name of perssonel
+    var mWorker = document.getElementById("workers").value;
+    localStorage.setItem("workers", mWorker);
+    //name of personnel partner
+    var mTagWorker = document.getElementById("tag_workers").value;
+    localStorage.setItem("tag_workers", mTagWorker);
+    //Plate number
+    var mPlateNum = document.getElementById("platenumber").value;
+    localStorage.setItem("platenumber", mPlateNum);
+    //size
+    var mSize = document.getElementById("car_size_details").value;
+    localStorage.setItem("car_size_details", mSize);
+    //type
+    var mType = document.getElementById("package_type").value;
+    localStorage.setItem("package_type", mType);
+    //discount (0%,10%...)
+    var mDiscountPercentage = document.getElementById("discounts").value;
+    localStorage.setItem("discounts", mDiscountPercentage);
+    //discount reason
+    var mDiscountReason = document.getElementById("promo_reason").value;
+    localStorage.setItem("promo_reason", mDiscountReason);
+    //additinal charges
+    var mAdditionalChargeOption = document.getElementById("additionals").value;
+    localStorage.setItem("additionals", mAdditionalChargeOption);
+    //others amount
+    var mAdditionalAmount = document.getElementById("additional_amount").value;
+    localStorage.setItem("additional_amount", mAdditionalAmount);
+    //others add note
+    var mNote = document.getElementById("note").value;
+    localStorage.setItem("note", mNote);
 
-<script type="text/javascript">
-        var currentDateTime = new Date();
-    var year = currentDateTime.getFullYear();
-    var month = (currentDateTime.getMonth() + 1);
-    var date = (currentDateTime.getDate() + 1);
+    //Customer Name
+    localStorage.setItem("customer_name", "<?php echo $customer_name;?>");
 
-    if(date < 10) {
-      date = '0' + date;
-    }
-    if(month < 10) {
-      month = '0' + month;
-    }
+    //Customer Contact Number
+    localStorage.setItem("contactnumber", "<?php echo $customer_contactNum?>");
 
-    var dateTomorrow = year + "-" + month + "-" + date;
-    var checkinElem = document.querySelector("#checkin-date");
-    var checkoutElem = document.querySelector("#checkout-date");
 
-    checkinElem.setAttribute("min", dateTomorrow);
-
-    checkinElem.onchange = function () {
-        checkoutElem.setAttribute("min", this.value);
-    }
-    </script>
-<script src="assets/js/timedropper.js"></script>
-<script type="text/javascript">
-    $( "#hour" ).timeDropper();
+    // Retrieve
+    //SAMPLE: document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+    return true;
+   } else {
+     document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     return true;
+   }
+}
 </script>
 
 </html>

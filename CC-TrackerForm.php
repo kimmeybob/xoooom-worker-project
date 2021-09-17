@@ -340,7 +340,6 @@ smaller than 560
     <div class="col-md-12">
 
 
-      
 
       <div >
         

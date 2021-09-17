@@ -4,12 +4,22 @@ $job_listing_id = $_GET['job_listing_id'];
 date_default_timezone_set('Asia/Manila');
 
 $edit_status_id = 0;
+$return_link = "dashboard";
+
 if(isset($_GET['edit_status_id'])) {
   // id index exists
   $edit_status_id = 1;
 
 }else{
   $edit_status_id = 0;
+}
+
+if(isset($_GET['return_link'])) {
+  // id index exists
+  $return_link = $_GET['return_link'];
+
+}else{
+  $return_link = "dashboard";
 }
 
 ?>
@@ -210,7 +220,7 @@ smaller than 560
                         echo "CC-TrackerForm.php?job_listing_id=".$job_listing_id;
                     }
                 }else if($edit_status_id == 1){
-                    echo "CC-Edittable-TrackerForm.php?job_listing_id=".$job_listing_id;
+                    echo "CC-Edittable-TrackerForm.php?job_listing_id=".$job_listing_id."&return_link=".$return_link;
                 }else{
                     echo "CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id";
                 }
@@ -224,7 +234,7 @@ smaller than 560
             Product Order ID
         </div>
         <!-- LINK:  -->
-        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>" method="post">
+        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $return_link;?>" method="post">
         <div>
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;margin-left: 5%;">
            
