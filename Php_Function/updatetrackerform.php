@@ -1,5 +1,14 @@
 <?php
-ob_start();
+
+  // Live Link (Uncomment for Production)
+  // $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"
+
+  // Debug Link (Comment in Product)
+  $myqueue_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard.php";
+  $all_orders_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_orders.php";
+
+
+
 $job_listing_id = $_GET['job_listing_id'];
 $return_link = $_GET['return_link'];
 $date_serviced = $_POST['date_serviced'];
@@ -76,19 +85,15 @@ $sql_update_commission_form = "update service_commissions set personnel = '$name
                             discount_amount = '$discount_amount', others_amount = '$other_amount', vat = '$vat', total = '$total', edit_logs = '$edit_logs_info' where cust_id = '$job_listing_id'";
 
 if ($connection->query($sql_update_commission_form) === TRUE) {
-    //header("Location: ../CC-client_dashboard.php");
     if($return_link == "dashboard"){
-        //header("Location: ../CC-client_dashboard.php?job_id=$job_listing_id");
-        ?>
+       ?>
         
-        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+        <meta http-equiv="refresh" content="0;url=<?php echo $myqueue_dashboard;?>"> 
         <?php
-        header("Location: ../CC-client_dashboard.php");
     }else{
-        header("Location: ../CC-client_dashboard_all_orders.php");
         ?>
         
-        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard_all_orders.php"> -->
+        <meta http-equiv="refresh" content="0;url=<?php echo $all_orders_dashboard;?>">
         <?php
     }
     echo "Successfully Added to Database! ";
@@ -96,9 +101,8 @@ if ($connection->query($sql_update_commission_form) === TRUE) {
 echo "Error: " . $sql_update_commission_form . "<br>" . $conn->error;
 ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+     <meta http-equiv="refresh" content="0;url=<?php echo $myqueue_dashboard?>">
      <?php
-       header("Location: ../CC-client_dashboard.php");
 }    
 
 ?>

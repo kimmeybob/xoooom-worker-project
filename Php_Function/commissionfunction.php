@@ -1,5 +1,13 @@
+<?php
+  // Live Link (Uncomment for Production)
+  // $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"
 
- <html>
+  // Debug Link (Comment in Product)
+  $myqueue_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard.php";
+?>
+
+
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,10 +157,7 @@ smaller than 560
 <body onload="timer_function()">
 <!-- LOADER DIV -->
 <div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
-        <?php
-        //  header("Location: ../CC-client_dashboard.php");
-        ?>
+       
 <p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;background: black;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 
@@ -247,9 +252,9 @@ if ($connection->query($sql_add_commission_form) === TRUE) {
 echo "Error: " . $sql_add_commission_form . "<br>" . $connection->error;
 ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
      <?php
-      header("Location: ../CC-client_dashboard.php");
+    
 }     
 
 
@@ -263,22 +268,22 @@ $sql_update_status = "update customer set status='complete' where customer_id = 
      echo "Error: " . $sql_update_status . "<br>" . $conn->error;
      ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
      <?php
-        header("Location: ../CC-client_dashboard.php");
+        
      }
 
 
 function proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id){
    
     if($AddToDatabase && $ChangeStatus){
-        // header("Location: ../CC-client_dashboard.php?job_id=$job_listing_id");
         ?>
         
-        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+        <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
+        <?php echo $GLOBALS['myqueue_dashboard']; ?>
         <?php
         echo "Success!";
-        exit;
+        
     }
 }
  

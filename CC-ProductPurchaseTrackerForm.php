@@ -6,7 +6,8 @@ date_default_timezone_set('Asia/Manila');
 $edit_status_id = 0;
 if(isset($_GET['edit_status_id'])) {
   // id index exists
-  $edit_status_id = $_GET['edit_status_id'];
+  $edit_status_id = 1;
+
 }else{
   $edit_status_id = 0;
 }
@@ -203,16 +204,17 @@ smaller than 560
               
                 <a onclick="" href="<?php 
                 if($edit_status_id == 0){
-                  if($job_listing_id==0){
-                   echo "CC-client_dashboard.php";
-                  }else{
-                    echo "CC-TrackerForm.php?job_listing_id=".$job_listing_id;
-                  }
+                    if($job_listing_id == 0){
+                        echo "CC-client_dashboard.php";
+                    }else{
+                        echo "CC-TrackerForm.php?job_listing_id=".$job_listing_id;
+                    }
+                }else if($edit_status_id == 1){
+                    echo "CC-Edittable-TrackerForm.php?job_listing_id=".$job_listing_id;
                 }else{
-                  echo "CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id";
+                    echo "CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id";
                 }
                 ?>" style="color: #0279F6;text-decoration: none;font-size: 14px">Cancel</a></p></div><br> 
-            <!-- history.go(-1) <div style="float:left; width: auto;position: relative;display: inline-block;font-size:11px;margin:0;"><p style="font-weight: bold;color: #868686;">Please fill up all the necessary fields for this product order</p></div>-->
         </div>
 
         <div style="height: 1px; width: 100%; background: #D3D3D3;margin-top: 5%;position: relative;display: inline-block;">        
@@ -281,8 +283,8 @@ smaller than 560
                 <option value="<?php echo "Rodel Macas";?>">
                     <?php echo "Rodel Macas";?>
                 </option>
-                <option value="<?php echo "Jeck Sila";?>">
-                    <?php echo "Jeck Sila";?>
+                <option value="<?php echo "Ruben Macas Jr";?>">
+                    <?php echo "Ruben Macas Jr";?>
                 </option>
                 
             </select>
@@ -774,7 +776,7 @@ smaller than 560
     <div id="discount_reason_container" style="position: relative;display: none;width: 100%;" class="form-group" >
         <div style="float:left; width: 100%;position: relative;display: inline-block;margin:0;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 0%;padding-right: 2%;padding-left: 2%;border-radius: 15px;" >
         <label style="color: #868686;font-size: 12px;" for="discountreason">Discount Reason</label>
-        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo" name="promo_reason" placeholder="Enter discount reason here. (Disregard if none)">
+        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" class="form-control" type="text" id="promo" name="promo_reason" placeholder="Enter discount reason here. (Required)">
         </div>
     </div>
 

@@ -625,7 +625,7 @@ smaller than 560
 <br>
 
 <br>
-    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status=true" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
+    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=true" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
       
     <div style="width: 80%;margin-left:10%;padding-bottom: 0.5%;background: white;margin-top: 4%;">
         <p style="float:left;display: block;width:49%;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;margin-left:0%;" id="myBtn">view order</p>
@@ -789,7 +789,8 @@ smaller than 560
         
 
       }else{
-        echo '<script>alert("No products order found.");</script>';
+        //Debug Check ifor no product orders
+        //echo '<script>alert("No products order found.");</script>';
       }
     
 

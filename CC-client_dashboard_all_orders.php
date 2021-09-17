@@ -64,7 +64,7 @@
   padding: 0 1px;
   display: none;
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: white;
 }
 
 /** MODAL STYLES */
