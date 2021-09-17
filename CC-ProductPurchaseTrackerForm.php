@@ -2,6 +2,15 @@
 
 $job_listing_id = $_GET['job_listing_id'];
 date_default_timezone_set('Asia/Manila');
+
+$edit_status_id = 0;
+if(isset($_GET['edit_status_id'])) {
+  // id index exists
+  $edit_status_id = $_GET['edit_status_id'];
+}else{
+  $edit_status_id = 0;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +23,8 @@ date_default_timezone_set('Asia/Manila');
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-       
+    <link rel="icon" href="images/logo.png">
+    
     <title>Xoooom Autospa</title>
 
 </head>
@@ -170,7 +180,7 @@ smaller than 560
 
     <body onload="<?php 
                 if($job_listing_id == 0){
-                  echo "";
+                  echo "set_Edit_data()";
                 }else{
                   echo "set_main_personnel()";
                 }?>">
@@ -190,15 +200,19 @@ smaller than 560
                 <p style="font-size: 10px;margin:0;color: #868686;">Please fill up all the necessary fields for this product order</p>
             </div>
             <div style="float: right; width: auto;position: relative;display: inline-block;"><p style="width: auto;background: white;margin:0;overflow: hidden">
-                <a href="
-                <?php 
-                if($job_listing_id == "0"){
-                  echo "CC-client_dashboard.php?job_listing_id=$job_listing_id"; 
-                }else{
-                  echo "CC-TrackerForm.php?job_listing_id=$job_listing_id";
+              
+                <a onclick="" href="<?php 
+                if($edit_status_id == 0){
+                  if($job_listing_id==0){
+                   echo "CC-client_dashboard.php";
+                  }else{
+                    echo "CC-TrackerForm.php?job_listing_id=".$job_listing_id;
                   }
-                ?>" style="color: black;font-size: 14px">Cancel</a></p></div><br>
-            <!--<div style="float:left; width: auto;position: relative;display: inline-block;font-size:11px;margin:0;"><p style="font-weight: bold;color: #868686;">Please fill up all the necessary fields for this product order</p></div>-->
+                }else{
+                  echo "CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id";
+                }
+                ?>" style="color: #0279F6;text-decoration: none;font-size: 14px">Cancel</a></p></div><br> 
+            <!-- history.go(-1) <div style="float:left; width: auto;position: relative;display: inline-block;font-size:11px;margin:0;"><p style="font-weight: bold;color: #868686;">Please fill up all the necessary fields for this product order</p></div>-->
         </div>
 
         <div style="height: 1px; width: 100%; background: #D3D3D3;margin-top: 5%;position: relative;display: inline-block;">        
@@ -208,7 +222,7 @@ smaller than 560
             Product Order ID
         </div>
         <!-- LINK:  -->
-        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>" method="post">
+        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>" method="post">
         <div>
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;margin-left: 5%;">
            
@@ -216,7 +230,7 @@ smaller than 560
                 if ($job_listing_id == "0"){
                   echo "PROTRK-$job_listing_id";
                 }else{
-                  echo "CUSTRK-$job_listing_id";
+                  echo "PROTRK-$job_listing_id";
                 }
                  ?>" readonly>  
             </div>
@@ -237,6 +251,21 @@ smaller than 560
         <label style="color: #868686;font-size: 12px;" for="checkin-date">Date</label>
         <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" type="date" id="date"  class="form-control" name="transaction_date" date-date-format="mm/dd/yyyy" value="<?php echo date('Y-m-d');?>" required>
       </div>
+
+      <div class="form-group">
+        <br/>
+        <div style="width: 100%;display: inline-block;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
+        <label style="color: #868686;font-size: 12px;" for="checkin-date">Customer's Name</label>
+        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" type="name" id="customer_name"  class="form-control" name="customer_name" placeholder="e.g Christopher Lim" value="<?php echo "";?>" required>
+      </div>
+
+      <div class="form-group">
+        <br/>
+        <div style="width: 100%;display: inline-block;border: 1px solid #D3D3D3;padding-bottom: 1%;padding-top: 1%;padding-right: 2%;padding-left: 2%;border-radius: 15px;">
+        <label style="color: #868686;font-size: 12px;" for="checkin-date">Contact No.</label>
+        <input style="border-radius: 10px;border-color: none; border-style: none;font-size: 14px" type="number" id="contactnumber"  class="form-control" name="contactnumber" placeholder="09XX-XXXX-XXX" value="<?php echo "";?>" required>
+      </div>
+
     </div>
 
       <div class="form-group">
@@ -296,8 +325,15 @@ smaller than 560
          
           <span onclick="minus_wax()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
+          
           var final_wax_value = 0;
-              function minus_wax(){
+          if(localStorage.getItem("products_wax_quantity") === null){
+            final_wax_value = 0;
+          }else{
+            final_wax_value = localStorage.getItem("products_wax_quantity");
+          }
+        
+            function minus_wax(){
                 var wax_value = document.getElementById("wax_quantity").value ;
                 if(final_wax_value == 0){
 
@@ -311,7 +347,16 @@ smaller than 560
           </script>
 
           <input type="number" name="wax_quantity" value="0" maxlength="2" min="0" id="wax_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
-          
+          <script>
+            if(localStorage.getItem("products_wax_quantity") === null){
+              
+            }else{
+              document.getElementById("wax_quantity").value = "";
+              document.getElementById("wax_quantity").value = final_wax_value;
+              
+            }
+          </script>
+
           <span onclick="add_wax()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
               function add_wax(){
@@ -350,6 +395,12 @@ smaller than 560
           <span onclick="minus_engine_shine()" style="3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_engine_shine_value = 0;
+          if(localStorage.getItem("products_engine_shine_quantity") === null){
+            final_engine_shine_value = 0;
+          }else{
+            final_engine_shine_value = localStorage.getItem("products_engine_shine_quantity");
+          }
+
               function minus_engine_shine(){
                 var wax_value = document.getElementById("engine_shine_quantity").value ;
                 if(final_engine_shine_value == 0){
@@ -365,7 +416,16 @@ smaller than 560
           
           
           <input type="number" name="engine_shine_quantity" value="0" maxlength="2" min="0" id="engine_shine_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
-          
+          <script>
+            if(localStorage.getItem("products_engine_shine_quantity") === null){
+              
+            }else{
+              document.getElementById("engine_shine_quantity").value = "";
+              document.getElementById("engine_shine_quantity").value = final_engine_shine_value;
+              
+            }
+          </script>
+
           <span onclick="add_engine_shine()" style="3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
          
@@ -404,8 +464,14 @@ smaller than 560
           <span onclick="minus_egd()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_egd_value = 0;
+          if(localStorage.getItem("products_engine_degreaser_quantity") === null){
+            final_egd_value = 0;
+          }else{
+            final_egd_value = localStorage.getItem("products_engine_degreaser_quantity");
+          }
+
               function minus_egd(){
-                var wax_value = document.getElementById("wax_quantity").value ;
+                var wax_value = document.getElementById("wax_quantity").value;
                 if(final_egd_value == 0){
 
                 }else{
@@ -418,7 +484,16 @@ smaller than 560
           </script>
 
           <input type="number" name="engine_degreaser_quantity" value="0" min="0" id="engine_degreaser_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;" readonly/>
-          
+          <script>
+            if(localStorage.getItem("products_engine_degreaser_quantity") === null){
+              
+            }else{
+              document.getElementById("engine_degreaser_quantity").value = "";
+              document.getElementById("engine_degreaser_quantity").value = final_egd_value;
+              
+            }
+          </script>
+
           <span onclick="add_egd()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           
@@ -458,6 +533,12 @@ smaller than 560
           <span onclick="minus_freshener()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_freshener_value = 0;
+          if(localStorage.getItem("products_freshener_quantity") === null){
+            final_freshener_value = 0;
+          }else{
+            final_freshener_value = localStorage.getItem("products_freshener_quantity");
+          }
+
               function minus_freshener(){
                 var wax_value = document.getElementById("wax_quantity").value ;
                 if(final_freshener_value == 0){
@@ -471,7 +552,15 @@ smaller than 560
               }
           </script>
           <input type="number" name="freshener_quantity" value="0" maxlength="2" min="0" id="freshener_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;"  value="0" readonly/>
-          
+          <script>
+            if(localStorage.getItem("products_freshener_quantity") === null){
+              
+            }else{
+              document.getElementById("freshener_quantity").value = "";
+              document.getElementById("freshener_quantity").value = final_freshener_value;
+              
+            }
+          </script>
           
           <span onclick="add_freshener()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
@@ -512,6 +601,12 @@ smaller than 560
           <span onclick="minus_wmremove()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-minus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_wmremove_value = 0;
+          if(localStorage.getItem("products_water_remover_quantity") === null){
+            final_wmremove_value = 0;
+          }else{
+            final_wmremove_value = localStorage.getItem("products_water_remover_quantity");
+          }
+
               function minus_wmremove(){
                 var wax_value = document.getElementById("wax_quantity").value ;
                 if(final_wmremove_value == 0){
@@ -525,7 +620,16 @@ smaller than 560
               }
           </script>
           <input type="number" name="water_remover_quantity" value="0" maxlength="2" min="0" id="water_remover_quantity" style="border: none;text-align: center;font-size:16px;width:25%;height:;padding: 0%;font-weight: normal;background: #F0F0F0;display: inline-block;"  value="0" readonly/>
-          
+          <script>
+            if(localStorage.getItem("products_water_remover_quantity") === null){
+              
+            }else{
+              document.getElementById("water_remover_quantity").value = "";
+              document.getElementById("water_remover_quantity").value = final_wmremove_value;
+              
+            }
+          </script>
+
           <span onclick="add_wmremove()" style="padding-left: 3%;padding-right: 3%;padding-top: 2%;padding-bottom: 2%;border-radius: 0px;font-weight: normal;background: #F0F0F0;border: 1px solid #F0F0F0;display: inline-block;"><span style="font-size: 12px;margin:0;color: white;"> <i class="fa fa-plus" aria-hidden="true" style="color: #A0A0A0;"></i></span></span>
           <script>
           var final_wmremove_value = 0;
@@ -641,6 +745,21 @@ smaller than 560
                 <option value="<?php echo "fifty";?>">
                     <?php echo "50%";?>
                 </option>
+                <option value="<?php echo "sixty";?>">
+                    <?php echo "60%";?>
+                </option>
+                <option value="<?php echo "seventy";?>">
+                    <?php echo "70%";?>
+                </option>
+                <option value="<?php echo "eighty";?>">
+                    <?php echo "80%";?>
+                </option>
+                <option value="<?php echo "ninety";?>">
+                    <?php echo "90%";?>
+                </option>
+                <option value="<?php echo "onehundred";?>">
+                    <?php echo "100%";?>
+                </option>
             </select>
       </div>
     </div>
@@ -670,8 +789,9 @@ smaller than 560
 
 <table style="width: 95%;">
   <tr>
-    <th style="color: #868686;">Product Billing</th>
-    <th style="text-align: right;color: #868686;">(PHP) Amount</th>
+    <th style="color: black;">Product Billing</th>
+    <th style="text-align: right;color: black;">(PHP) Amount</th>
+    
   </tr>
   
   <tr>
@@ -680,8 +800,13 @@ smaller than 560
   </tr>
 
   <tr>
-    <td id="additional_discount_label">Discount - 0%</td>
-    <td ><input style="border: none; font-size: 16px;text-align: right;outline:none;height:auto;padding: 0;" id="additional_discount_amount" type="number" name="additional_discount_amount" style="text-align: right;" value="0" readonly/></td>
+    <td id="additional_discount_label">Discount  (0%)</td>
+    <td><input style="border: none; font-size: 16px;text-align: right;outline:none;height:auto;padding: 0;" id="additional_discount_amount" type="number" name="additional_discount_amount" style="text-align: right;" value="0" readonly/></td>
+  </tr>
+
+  <tr>
+    <td id="additional_discount_label">Manager's Discount</td>
+    <td><input style="border: none; font-size: 16px;text-align: right;outline:none;height:auto;padding: 0;" id="product_managers_discount" type="number" name="product_managers_discount" style="text-align: right;" value="0" readonly/></td>
   </tr>
 
   <tr>
@@ -690,8 +815,8 @@ smaller than 560
   </tr>
 
   <tr>
-    <td id="package_label_13">Total:</td>
-    <td><input style="border: none; font-size: 16px;text-align: right;outline:none;height:auto;padding: 0;" type="number" id="additional_sub_total" name="additional_sub_total" style="text-align: right;" value="0" readonly/></td>
+    <td id="package_label_13" style="font-weight: bold;color: #0279F6">Product Total:</td>
+    <td><input style="font-weight: bold;color: #0279F6;border: none; font-size: 16px;text-align: right;outline:none;height:auto;padding: 0;" type="number" id="additional_sub_total" name="additional_sub_total" style="text-align: right;" value="0" readonly/></td>
   </tr>
   
 </table>
@@ -780,22 +905,93 @@ smaller than 560
   var local_storage_tag_worker = localStorage.getItem("tag_workers");
   //alert(local_storage_worker, local_storage_tag_worker);
 
-  function set_main_personnel(){
-    var local_storage_worker = localStorage.getItem("workers");
-      //alert("Running");
-    var selected_personnel_main = local_storage_worker;
-    var default_personnel_main = document.getElementById("workers").getElementsByTagName("option");
-    
-    for (var i = 0; i < default_personnel_main.length; i++) {
-
-        if(selected_personnel_main == default_personnel_main[i].value){
-        
-          document.getElementById('workers').getElementsByTagName('option')[i].selected = 'selected';
-        }else{
-            //default_personnel_main[i].disabled = true;
-            
-        }
+  function set_Edit_data(){
+    // Checks if job_listing = 0 is called for editing or creating a new single purchase product order.
+    if (localStorage.getItem("local_product_commission_id") === null) {
+      
+    }else{
+      set_main_personnel();
     }
+
+  }
+
+  function set_main_personnel(){
+    
+      /** Customer Name */
+      var local_storage_customer_name = localStorage.getItem("customer_name");
+      
+
+     /** Customer Contact Number */
+     var local_storage_contactnumber = localStorage.getItem("contactnumber");
+
+      /**  Personnel Variables */
+      var local_storage_worker = localStorage.getItem("workers");
+      //alert("Running");
+      var selected_personnel_main = local_storage_worker;
+      var default_personnel_main = document.getElementById("workers").getElementsByTagName("option");
+      /** --------------------------------------------------------------------------------------- */
+
+      /** Discount Vars */
+      var local_storage_discounts = localStorage.getItem("products_discounts");
+      var default_discount_percentage = document.getElementById("discounts").getElementsByTagName("option");
+      /** --------------------------------------------------------------------------------------- */
+
+      /** Discount Reason */
+      var local_storage_promo_reason = localStorage.getItem("products_promo");
+      /** --------------------------------------------------------------------------------------- */
+
+      /** Notes */
+      var local_storage_notes = localStorage.getItem("products_note");
+      /** --------------------------------------------------------------------------------------- */
+
+
+      /**------------ Sets Contact Name ------------------------------------------------------ */
+      document.getElementById("customer_name").value = local_storage_customer_name;
+      /**---------------------------------------------------------------------------------------- */
+
+      /**------------ Sets Contact Number ------------------------------------------------------ */
+      document.getElementById("contactnumber").value = local_storage_contactnumber;
+      /**---------------------------------------------------------------------------------------- */
+
+
+      //Sets Personnel from the Service/Commission Tracker form.
+      for (var i = 0; i < default_personnel_main.length; i++) {
+
+          if(selected_personnel_main == default_personnel_main[i].value){
+          
+            document.getElementById('workers').getElementsByTagName('option')[i].selected = 'selected';
+          }else{
+              //default_personnel_main[i].disabled = true;
+              
+          }
+      }
+
+      //Sets Discount, Discount Reason, Note
+      if (localStorage.getItem("products_discounts") === null) {
+        //Products Tracker form has an existing data.
+      }else{
+        //alert("Products has an existing data.");
+
+              /**------------ Sets Discount Percentage ------------------------------------------------------ */
+              for (var i = 0; i < default_discount_percentage.length; i++) {
+
+                if(local_storage_discounts == default_discount_percentage[i].value){
+                
+                  document.getElementById('discounts').getElementsByTagName('option')[i].selected = 'selected';
+                  discounts_pop_up();
+                }
+              }
+              /** ---------------------------------------------------------------------------------------------*/
+
+              /**------------ Sets Discount Reason ------------------------------------------------------ */
+              document.getElementById("promo").value = local_storage_promo_reason;
+              /**---------------------------------------------------------------------------------------- */
+
+              /**------------ Sets Note ------------------------------------------------------ */
+              document.getElementById("note").innerHTML = local_storage_notes;
+              /**---------------------------------------------------------------------------------------- */
+
+      }
   }
 </script>
 <script type="text/javascript">
@@ -814,14 +1010,29 @@ function submission_check(){
         if(personnel_main == "default_personnel"){
           alert("Please select a personnel.");
           return false;
+        }else if(document.getElementById("additional_sub_total").value == "0"){
+          alert("Please add a product.");
+          return false;
         }else{
          
             if (typeof(Storage) !== "undefined") {
               // data storage Set Data
+
+              //ID
+              localStorage.setItem("products_order_bind_id", <?php echo json_encode($job_listing_id);?>);
+
               //date
               var mDateProducts = document.getElementById("date").value;
               //alert("Date: "+mDate);
               localStorage.setItem("products_date", mDateProducts);
+              //Customer Name
+              var mCustomerName = document.getElementById("customer_name").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("customer_name", mCustomerName);
+              //Customer Contact Number
+              var mContactNumber = document.getElementById("contactnumber").value;
+              //alert("Date: "+mDate);
+              localStorage.setItem("contactnumber", mContactNumber);
               //Personnel
               var mWorkerProducts = document.getElementById("workers").value;
               //alert("Date: "+mDate);
@@ -860,7 +1071,6 @@ function submission_check(){
               localStorage.setItem("products_note", mNote);
               
              
-              
               //Subtotal Amount
               var mSubtotalAmount = document.getElementById("additional_other_amount").value;
               localStorage.setItem("products_subtotal_amount", mSubtotalAmount);
@@ -886,7 +1096,7 @@ function submission_check(){
        
 }
 
-
+water_remover_compute();
 function water_remover_compute(){
   var water_remover_quantity = parseInt(document.getElementById("water_remover_quantity").value);
   var total_price = water_remover_quantity * 299;
@@ -897,6 +1107,8 @@ function water_remover_compute(){
   watermark_remover_subtotal = total_price;
   subtotal_compute();
 }
+
+freshener_compute();
 function freshener_compute(){
   var freshener_quantity = parseInt(document.getElementById("freshener_quantity").value);
   var total_price = freshener_quantity * 299;
@@ -907,6 +1119,8 @@ function freshener_compute(){
   freshener_subtotal = total_price;
   subtotal_compute();
 }
+
+engine_degreaser_compute();
 function engine_degreaser_compute(){
   var engine_degreaser_quantity = parseInt(document.getElementById("engine_degreaser_quantity").value);
   var total_price = engine_degreaser_quantity * 499;
@@ -917,6 +1131,8 @@ function engine_degreaser_compute(){
   engine_degreaser_subtotal = total_price;
   subtotal_compute();
 }
+
+engine_shine_compute();
 function engine_shine_compute(){
   var engine_shine_quantity = parseInt(document.getElementById("engine_shine_quantity").value);
   var total_price = engine_shine_quantity * 499;
@@ -936,13 +1152,12 @@ function total_price_compute(){
 }
 
 function subtotal_compute(){
-
   subtotal_amount = (parseInt(wax_subtotal+engine_shine_subtotal+engine_degreaser_subtotal+freshener_subtotal+watermark_remover_subtotal));
   document.getElementById("additional_other_amount").value = "";
   document.getElementById("additional_other_amount").value = (parseInt(wax_subtotal+engine_shine_subtotal+engine_degreaser_subtotal+freshener_subtotal+watermark_remover_subtotal));
   discounts_pop_up();
- 
 }
+
 
 function incrementValue()
 {
@@ -963,6 +1178,9 @@ function decrementValue()
     }
 
 }
+
+//Calls the function on load to compute automatically.
+wax_compute_price();
 function wax_compute_price(){
   
   var wax_quantity = parseInt(document.getElementById("wax_quantity").value);
@@ -981,6 +1199,7 @@ function wax_compute_price(){
 }
 
 
+
  function discounts_pop_up() {
             var discounts_value = document.getElementById("discounts").value;
 
@@ -989,54 +1208,216 @@ function wax_compute_price(){
                 document.getElementById("discount_reason_container").style.display = "none";
 
                 document.getElementById("additional_discount_label").innerHTML = "";
-                document.getElementById("additional_discount_label").innerHTML = "Discount -0%";
+                document.getElementById("additional_discount_label").innerHTML = "Discount (0%)";
 
                 document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0);
-                  discount_amount = parseInt(subtotal_amount*0);
+                document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0);
+                discount_amount = parseInt(subtotal_amount*0);
             }else{
                 document.getElementById("discount_promo_code").style.display = "inline-block";
                 document.getElementById("discount_reason_container").style.display = "inline-block";
-
+                
                 if(String(discounts_value) == "ten"){
+                  
                   document.getElementById("additional_discount_label").innerHTML = "";
-                  document.getElementById("additional_discount_label").innerHTML = "Discount -10%";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (10%)";
 
-                  document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*-0.10);
-                  discount_amount = parseInt(subtotal_amount*0.10);
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.10;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.10);
+                  }
 
                 }else if(String(discounts_value) == "twenty"){
                   document.getElementById("additional_discount_label").innerHTML = "";
-                  document.getElementById("additional_discount_label").innerHTML = "Discount -20%";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (20%)";
 
-                  document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*-0.20);
-                  discount_amount = parseInt(subtotal_amount*0.20);
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.20;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.20);
+                  }
+                  
 
                 }else if(String(discounts_value) == "thirty"){
                   document.getElementById("additional_discount_label").innerHTML = "";
-                  document.getElementById("additional_discount_label").innerHTML = "Discount -30%";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (30%)";
 
-                  document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*-0.30);
-                  discount_amount = parseInt(subtotal_amount*0.30);
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.30;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.30);
+                  }
                   
                 }else if(String(discounts_value) == "forty"){
                   document.getElementById("additional_discount_label").innerHTML = "";
-                  document.getElementById("additional_discount_label").innerHTML = "Discount -40%";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (40%)";
 
-                  document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*-0.40);
-                  discount_amount = parseInt(subtotal_amount*0.40);
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.40;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.40);
+                  }
                   
                 }else if(String(discounts_value) == "fifty"){
                   document.getElementById("additional_discount_label").innerHTML = "";
-                  document.getElementById("additional_discount_label").innerHTML = "Discount -50%";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (50%)";
 
-                  document.getElementById("additional_discount_amount").value = "";
-                  document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*-0.50);
-                  discount_amount = parseInt(subtotal_amount*0.50);
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.50;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.50);
+                  }
+                  
+                }else if(String(discounts_value) == "sixty"){
+                  document.getElementById("additional_discount_label").innerHTML = "";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (60%)";
+
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.60;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.60);
+                  }
+                  
+                }else if(String(discounts_value) == "seventy"){
+                  document.getElementById("additional_discount_label").innerHTML = "";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (70%)";
+
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.70;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.70);
+                  }
+                  
+                }else if(String(discounts_value) == "eighty"){
+                  document.getElementById("additional_discount_label").innerHTML = "";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (80%)";
+
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.80;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.80);
+                  }
+                  
+                }else if(String(discounts_value) == "ninety"){
+                  document.getElementById("additional_discount_label").innerHTML = "";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (90%)";
+
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*0.90;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*0.90);
+                  }
+                  
+                }else if(String(discounts_value) == "onehundred"){
+                  document.getElementById("additional_discount_label").innerHTML = "";
+                  document.getElementById("additional_discount_label").innerHTML = "Discount (100%)";
+
+                  var raw_decimal_amount_holder = 0.0;
+                  raw_decimal_amount_holder = subtotal_amount*1;
+                  
+                  if((raw_decimal_amount_holder%1)>0){
+                     discount_amount = parseInt(raw_decimal_amount_holder+1.00);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = discount_amount;
+                   
+                  }else{
+                     discount_amount = parseInt(raw_decimal_amount_holder);
+                     //Display discount amount.
+                     document.getElementById("additional_discount_amount").value = "";
+                     document.getElementById("additional_discount_amount").value = parseInt(subtotal_amount*1);
+                  }
                   
                 }
             }
@@ -1069,5 +1450,6 @@ function wax_compute_price(){
             }
 </script>
 </script>
+
 
 </html>

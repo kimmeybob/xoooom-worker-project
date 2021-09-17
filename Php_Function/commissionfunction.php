@@ -149,7 +149,10 @@ smaller than 560
 <body onload="timer_function()">
 <!-- LOADER DIV -->
 <div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-        <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+        <?php
+        //  header("Location: ../CC-client_dashboard.php");
+        ?>
 <p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;background: black;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 
@@ -220,11 +223,14 @@ if($promo_reason == "" || $promo_reason == null){
     $final_promo_reason = $promo_reason;
 }
 
-if($note == "" || $note == null){
+//checks if others status is none if yes then sets note to none.
+if($additional_option == "none"){
     $final_note = "none";
 }else{
     $final_note = $note;
 }
+
+
 
 
 $sql_add_commission_form = "INSERT INTO service_commissions (cust_id, date,personnel,partner,size,type,plate,discount,promo_code,discount_notes,additional_charge_type,additional_notes,discount_amount,others_amount,vat,total,time,edit_logs) 
@@ -241,8 +247,9 @@ if ($connection->query($sql_add_commission_form) === TRUE) {
 echo "Error: " . $sql_add_commission_form . "<br>" . $connection->error;
 ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
      <?php
+      header("Location: ../CC-client_dashboard.php");
 }     
 
 
@@ -256,8 +263,9 @@ $sql_update_status = "update customer set status='complete' where customer_id = 
      echo "Error: " . $sql_update_status . "<br>" . $conn->error;
      ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
      <?php
+        header("Location: ../CC-client_dashboard.php");
      }
 
 
@@ -267,7 +275,7 @@ function proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id){
         // header("Location: ../CC-client_dashboard.php?job_id=$job_listing_id");
         ?>
         
-        <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
         <?php
         echo "Success!";
         exit;

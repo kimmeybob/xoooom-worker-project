@@ -49,17 +49,18 @@ $ChangeStatus = false;
 $final_promo_reason = "";
 $final_note = "";
 
-if($promo_reason == "" || $promo_reason == null){
+if($discount == "none"){
     $final_promo_reason = "none";
 }else{
     $final_promo_reason = $promo_reason;
 }
 
-if($note == "" || $note == null){
+if($additional_option == "none"){
     $final_note = "none";
 }else{
     $final_note = $note;
 }
+
 
 date_default_timezone_set('Asia/Manila');
 
@@ -71,7 +72,7 @@ echo $edit_logs_info;
 
 $sql_update_commission_form = "update service_commissions set personnel = '$name_of_personnel', partner = '$tag_personnel', 
                             size = '$car_size', type = '$package_type', plate = '$plate_number', discount = '$discount',promo_code = '$promo_code',
-                            discount_notes = '$promo_reason', additional_charge_type = '$additional_option', additional_notes = '$note', 
+                            discount_notes = '$final_promo_reason', additional_charge_type = '$additional_option', additional_notes = '$final_note', 
                             discount_amount = '$discount_amount', others_amount = '$other_amount', vat = '$vat', total = '$total', edit_logs = '$edit_logs_info' where cust_id = '$job_listing_id'";
 
 if ($connection->query($sql_update_commission_form) === TRUE) {
@@ -80,13 +81,14 @@ if ($connection->query($sql_update_commission_form) === TRUE) {
         //header("Location: ../CC-client_dashboard.php?job_id=$job_listing_id");
         ?>
         
-        <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
         <?php
+        header("Location: ../CC-client_dashboard.php");
     }else{
-        //header("Location: ../CC-client_dashboard_all_orders.php?job_id=$job_listing_id");
+        header("Location: ../CC-client_dashboard_all_orders.php");
         ?>
         
-        <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard_all_orders.php">
+        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard_all_orders.php"> -->
         <?php
     }
     echo "Successfully Added to Database! ";
@@ -94,8 +96,9 @@ if ($connection->query($sql_update_commission_form) === TRUE) {
 echo "Error: " . $sql_update_commission_form . "<br>" . $conn->error;
 ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
+     <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
      <?php
+       header("Location: ../CC-client_dashboard.php");
 }    
 
 ?>

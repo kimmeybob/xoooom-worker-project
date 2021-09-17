@@ -349,6 +349,85 @@ smaller than 560
    
   }
 }
+
+
+
+
+
+
+/*<--------------- Test Slide Implementation -------------------------------------------->*/
+
+}
+  .tabs {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:90%;
+      height:50%;
+      background:#f5f5f5;
+      padding:20px 30px;
+      overflow:hidden;
+      /*border-radius:50px;
+      box-shadow:5px 10px 5px #ccc;*/
+  }
+  .tabs .tab-header {
+      height:60px;
+      display:flex;
+      align-items:center;
+
+  }
+  .tabs .tab-header > div {
+      width:calc(100% / 4);
+      text-align:center;
+      color:#888;
+      font-weight:600;
+      cursor:pointer;
+      font-size:14px;
+      text-transform:uppercase;
+      outline:none;
+  }
+  .tabs .tab-header > div > i {
+      display:block;
+    margin-bottom:5px;
+  }
+  .tabs .tab-header > div.active {
+      color:#00acee;
+      background: white;
+  }
+  .tabs .tab-indicator {
+      position:relative;
+      width:calc(100% / 4);
+      height:5px;
+      background:#00acee;
+      left:0px;
+      border-radius:5px;
+      transition:all 200ms ease-in-out;
+  }
+  .tabs .tab-body {
+      position:relative;
+      height:calc(100% - 60px);
+      padding:10px 5px;
+      margin-top: 10%;
+  }
+  .tabs .tab-body > div {
+      position:absolute;
+      top:-200%;
+      opacity:0;
+      transform:scale(0.9);
+      transition:opacity 500ms ease-in-out 0ms,
+        transform 200ms ease-in-out 0ms;
+  }
+  .tabs .tab-body > div.active {
+      top:0px;
+      opacity:1;
+      transform:scale(1);
+  } 
+
+
+/*<--------------- Test Slide Implementation -------------------------------------------->*/
+
+
     </style>
 
     <body>
@@ -557,7 +636,6 @@ smaller than 560
      <div style="background: #D3D3D3;height: 1px;width: 100%;margin-top: 5%;display: inline-block">
      </div>
 
-
      <div style="margin-top: 5%;margin-left: 5%;color: black">
         <span style="font-weight: bold;font-size: 22px;">In Progress</span>
         
@@ -573,6 +651,8 @@ smaller than 560
 
 
 <!-- /** LOGIC for listing here */ -->
+
+
 
      <!-- RT_Func_one (In-Progress)-->
      <div class="in_progress_container" style="background: white; margin-left: 5%; margin-right: 5%;width: auto;margin-top: 5%;padding-bottom: 2%;">
@@ -690,13 +770,93 @@ smaller than 560
 
               }
       }} ?>
+
 </div>
+
+
+
+
+
+
+<!-- TESTING SLIDE FEATURE IMPLEMENTATION ---------------------------------------------------------------------->
+
+
+
+<div class="tabs">
+  <div class="tab-header">
+    <div class="active">
+      <i class="fa fa-code"></i> In-Progress
+    </div>
+    <div>
+      <i class="fa fa-code"></i> Available Job Orders
+    </div>
+    <div>
+      <i class="fa fa-code"></i> Completed
+    </div>
+    <div>
+      <i class="fa fa-code"></i> Cancelled
+    </div>
+  </div>
+  <div class="tab-indicator">
+    
+  </div>
+  <div class="tab-body" style="background: white;">
+    <div class="active" style="background: white">
+      
+    </div>
+    <div style="background: white">
+      <h2>Available Job Orders Section</h2>
+      <p>This is the content area for the Available Job Orders Section.</p>
+    </div>
+    <div style="background: white">
+      <h2>Completed Job Orders Section</h2>
+      <p>This is the content area for the Completed Job Orders Section.</p>
+    </div>
+    <div style="background: white">
+      <h2>Cancelled Job Orders Section</h2>
+      <p>This is the content area for the Cancelled Job Orders Section.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTING SLIDE FEATURE IMPLEMENTATION -------------------------------------------------------------------------->
      
 
 
 
 
+
+
     </body>
+
+
+
+<!-- Test Slide Implementation --------------------------------------------------------------------------->
+
+
+<script type="text/javascript">
+  let tabHeader = document.getElementsByClassName("tab-header")[0];
+let tabIndicator = document.getElementsByClassName("tab-indicator")[0];
+let tabBody = document.getElementsByClassName("tab-body")[0];
+ 
+let tabsPane = tabHeader.getElementsByTagName("div");
+ 
+for(let i=0;i<tabsPane.length;i++){
+  tabsPane[i].addEventListener("click",function(){
+    tabHeader.getElementsByClassName("active")[0].classList.remove("active");
+    tabsPane[i].classList.add("active");
+    tabBody.getElementsByClassName("active")[0].classList.remove("active");
+    tabBody.getElementsByTagName("div")[i].classList.add("active");
+    
+    tabIndicator.style.left = `calc(calc(100% / 4) * ${i})`;
+  });
+}
+
+</script>
+
+<!-- //  Test Slide Implementation ------------------------------------------------------------------------- -->
+
+
 
 <script type="text/javascript">
   

@@ -1,6 +1,17 @@
 <?php
 
 $job_listing_id = $_GET['job_listing_id'];
+$edit_status_id = 0;
+if(isset($_GET['edit_status_id'])) {
+  // id index exists
+  $edit_status_id = $_GET['edit_status_id'];
+}else{
+  $edit_status_id = 0;
+}
+
+$Local_product_commission_id = $edit_status_id;
+
+
 ob_start();
 ?>
 <html>
@@ -153,21 +164,24 @@ smaller than 560
 </style>
 <body onload="timer_function()">
 <!-- LOADER DIV -->
-<div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
-<p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;background: black;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
+<div style=" display: none;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
+<p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 
 
 </body>
 <script>
-    function timer_function() {
+
+function timer_function() {
     setTimeout(setAlert, 10000);
 }
 function setAlert() {
     document.getElementById("slow_internet_display").style.display = "block";
 }
+
+
 </script>
-</html>
+
 <?php
      $wax_status = "false";
      $engine_shine_status = "false";
@@ -178,6 +192,9 @@ function setAlert() {
     $job_product_ID_link = $job_listing_id;
     $scheduled_date = $_POST["transaction_date"];
     $personnel = $_POST["workers"];
+    $customer_name = $_POST["customer_name"];
+    $customernumber = $_POST["contactnumber"];
+    
 
     $subtotal = $_POST["additional_other_amount"];
 
@@ -200,9 +217,12 @@ function setAlert() {
     include '../Admin/database_config.php';
     echo "
     ID: $job_product_ID_link<br>
+    Product Commission ID (For EDITS): $edit_status_id<br>
     Sched Date: $scheduled_date<br>
     Personnel: $personnel<br>
-   
+    Customer Name: $customer_name<br>
+    Customer Number: $customernumber<br>
+
     Wax Qty: $wax_quantity<br>
     Engine Shine Qty: $engine_shine_quantity<br>
     Freshener Qty: $freshener_quantity<br>
@@ -213,12 +233,19 @@ function setAlert() {
     Note: $note<br>
     Discount Value: $discount_value<br>
     Vat: $vat<br>
+    Subtotal: $subtotal<br>
     Total: $total<br>
     ";
 
     $promo_code_value = "none";
     $promo_reason_value = "none";
-    $customer_name = "";
+    $Edit_check = "false";
+
+     //Create variable to Date Format MM/DD/YYYY
+     $rawDate = explode('-',$scheduled_date,3);
+     //Date is based on the ISO standard format of HTML5 (YYYY-MM-DD)
+    // echo "<script>alert('Month: ".$rawDate[1]."/Day: ".$rawDate[2]."/Year: ".$rawDate[0]."');</script>";
+     $final_date_string = $rawDate[1]."/".$rawDate[2]."/".$rawDate[0];
 
     //Checks if promo code is empty
     if($promo_code == ""){
@@ -236,119 +263,239 @@ function setAlert() {
 
    
     // Checks if Default testing account is used.
-    if($job_product_ID_link = "0"){
-        $customer_name =  $personnel;
+    if($job_product_ID_link = "0" || $job_product_ID_link = 0){
+        //$customer_name =  $customer_name;
     }else{
-        $customer_name =  $personnel;
-    }
-
-    
-
-
-    
-
-    if($wax_quantity != 0){
-        $subtotal_computed_value = 499 * $wax_quantity;
-
-        $sql_wax_item = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,customer_name,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
-                                        VALUES ('$scheduled_date', '$personnel', 'Wax', '$wax_quantity', '$note', '$customer_name', '$subtotal_computed_value', '$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
-
-        if ($connection->query($sql_wax_item) === TRUE) {
-            //echo "Product successfully registered - Wax<br>";
-            $wax_status = "true";
-            proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-        } else {
-            echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
-        }                                 
-    }else{
-        $wax_status = "true";
-        proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-    }
-
-    if($engine_shine_quantity != 0){
-        $subtotal_computed_value = 499 * $engine_shine_quantity;
-
-        $sql_wax_item = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,customer_name,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
-                                            VALUES ('$scheduled_date', '$personnel', 'Engine Shine', '$engine_shine_quantity', '$note', '$customer_name', '$subtotal_computed_value', '$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
-
-        if ($connection->query($sql_wax_item) === TRUE) {
-            //echo "Product successfully registered - Engine Shine<br>";
-            $engine_shine_status = "true";
-            proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-        } else {
-            echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
-        }
-    }else{
-        $engine_shine_status = "true";
-        proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-    }
-
-    if($engine_degreaser_quantity != 0){
-        $subtotal_computed_value = 499 * $engine_degreaser_quantity;
-
-        $sql_wax_item = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,customer_name,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
-                                            VALUES ('$scheduled_date', '$personnel', 'Engine Degreaser', '$engine_degreaser_quantity', '$note', '$customer_name', '$subtotal_computed_value', '$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
-
-        if ($connection->query($sql_wax_item) === TRUE) {
-            //echo "Product successfully registered - Engine Degreaser<br>";
-            $engine_degrease_status = "true";
-            proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-        } else {
-            echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
-        }
         
-    }else{
-        $engine_degrease_status = "true";
-        proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+        $query_customer_name = "Select * from customer where customer_id = $job_listing_id";
+        $query_run_customer_name = mysqli_query($connection,$query_customer_name);
+        $query_rows = mysqli_num_rows($query_run_customer_name) > 0;
+        
+        if($query_rows){
+                while($row = mysqli_fetch_array($query_run_customer_name)){
+                  $customer_name =  $row['Name'];
+                } // End of Loop
+        }else{
+          //$customer_name = $personnel;
+        } //Ending of if statement if no existing customer_id exists
     }
 
-    if($freshener_quantity != 0){
-        $subtotal_computed_value = 350 * $freshener_quantity;
+    //Delete Existing Products ordered from the Database
+    $query_product_cust_id = "Select * from product_commissions where cust_id = $job_listing_id";
+    $query_run_product_cust_id = mysqli_query($connection,$query_product_cust_id);
+    $query_rows = mysqli_num_rows($query_run_product_cust_id) > 0;
+    $product_commission_id = "";
 
-        $sql_wax_item = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,customer_name,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
-        VALUES ('$scheduled_date', '$personnel', 'Freshener', '$freshener_quantity', '$note', '$customer_name', '$subtotal_computed_value', '$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
+    //Checks if record Exists in database.
+    /**Record does not exist in database. (New Record.) */
+    if($query_rows == 0){
+                //Creates a mew Product Order Record.
+                $Edit_check = "false";
+               
+                $sql_product_commission_transaction = "INSERT INTO product_commissions (cust_id,date,personnel,note,customer_name,customer_contact_number,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
+                VALUES ('$job_listing_id','$final_date_string', '$personnel','$note', '$customer_name','$customernumber','$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
 
-        if ($connection->query($sql_wax_item) === TRUE) {
-            //echo "Product successfully registered - Freshener<br>";
-            $freshener_status = "true";
-            proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-        } else {
-            echo "Error: " . $sql_wax_item . "<br>" . $conn->error;
-            ?>
-     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
-     <?php
-        }
+                  if ($connection->query($sql_product_commission_transaction) === TRUE) {
+                              //Checks if customer has an exsiting product order in the database.
+                              $query_product_customer_check = "Select * from product_commissions where cust_id = $job_listing_id;";
+                              $query_run_product_customer_check = mysqli_query($connection, $query_product_customer_check);
+                              $check_job_orders_date = mysqli_num_rows($query_run_product_customer_check) > 0;
 
+                              while($row = mysqli_fetch_array($query_run_product_customer_check)){
+                                //Gets the Product Commission ID
+                                $product_commission_id = $row['product_commission_id'];
+                              }
+                  }else{
+                            echo '<script>alert("Something went wrong in creating a new Product Order.");</script>';
+                            echo "Error: " . $sql_product_commission_transaction . "<br>" . $connection->error;
+                  }
+
+    /**Record exists in database. (Old Record.) Required Record Editing */
     }else{
-        $freshener_status = "true";
-        proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-    }
 
-    if($water_remover_quantity != 0){
-        $subtotal_computed_value = 350 * $water_remover_quantity;
+                //Gets the Product Commission ID
+                while($row = mysqli_fetch_array($query_run_product_cust_id)){
+                  $product_commission_id = $row['product_commission_id'];
+                }
 
-        $sql_wax_item = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,customer_name,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
-        VALUES ('$scheduled_date', '$personnel', 'Watermarks Remover', '$water_remover_quantity', '$note', '$customer_name', '$subtotal_computed_value', '$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
+              //Check if Product Order id is '0'  (Independent Product Purchase) /** SHOULD NOE BE DELETED! */  
+                if($job_listing_id == "0" || $job_listing_id == 0){
+                          // DO NOT DELETE
+                          echo "Unbinded Product Purchase.";
+                          echo $Local_product_commission_id;
+                          //Check if product commission id has a value for editing purposes.
+                          if($Local_product_commission_id == 0){
+                            echo "New Unbinded Product Purchase Order.";
+                              //Product does not have a commission ID. Product will be auto added to datbase.
+                              $sql_product_commission_transaction = "INSERT INTO product_commissions (cust_id,date,personnel,note,customer_name,customer_contact_number,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
+                              VALUES ('$job_listing_id','$final_date_string', '$personnel','$note','$customer_name','$customernumber','$discount_percent','$promo_code_value','$promo_reason_value','$discount_value','0', '$total')";
 
-        if ($connection->query($sql_wax_item) === TRUE) {
-            //echo "Product successfully registered - Watermark<br>";
-            $watermark_status = "true";
-            proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-        } else {
-            echo "Error: " . $sql_wax_item . "<br>" . $conn->error;
-            ?>
-     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
-     <?php
-        }
-    }else{
-        $watermark_status = "true";
-        proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
-    }
+                                if ($connection->query($sql_product_commission_transaction) === TRUE) {
+                                    //Checks if customer has an exsiting product order in the database.
+                                    $query_product_customer_check = "Select * from product_commissions where cust_id = $job_listing_id;";
+                                    $query_run_product_customer_check = mysqli_query($connection, $query_product_customer_check);
+                                    $check_job_orders_date = mysqli_num_rows($query_run_product_customer_check) > 0;
+
+                                    while($row = mysqli_fetch_array($query_run_product_customer_check)){
+                                      //Gets the Product Commission ID
+                                      $product_commission_id = $row['product_commission_id'];
+                                    }
+                                }else{
+                                  echo "Error: " . $query_product_customer_check . "<br>" . $connection->error;
+                                }
+                          }else{
+                            echo "Existing Unbinded Product Purchase Order.";
+                            //Product does have a commission ID. Product order will be updated based on the product commission id
+                            $sql_product_commission_transaction = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat='0',total='$total' where product_commission_id='$Local_product_commission_id'";
+
+                                    if ($connection->query($sql_product_commission_transaction) === TRUE) {
+
+                                        //echo '<script>alert("Deleting items!");</script>';
+                                        $sql_delete_product_items = "DELETE FROM product_item_orders WHERE product_commission_id = '$Local_product_commission_id'";
+                                        //$wax_status = "true";
+                                        if ($connection->query($sql_delete_product_items) === TRUE) {
+                                          
+                                        } else {
+                                            echo "Error: " . $sql_delete_product_items . "<br>" . $connection->error;
+                                        } 
+
+                                    } else {
+                                        echo "Error: " . $sql_product_commission_transaction . "<br>" . $connection->error;
+                                    }  
+                          }
+                          
+                }else{      
+                            $Edit_check = "true";
+                           // echo '<script>alert("Deleted called!");</script>';
+                            
+                            if($Edit_check){
+                                          //If custoemr has an existing product order. Update existing transaction order.
+                                        
+                                          $sql_wax_item = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat='0',total='$total' where cust_id='$job_listing_id'";
+                                        
+                                          if ($connection->query($sql_wax_item) === TRUE) {
+
+                                                  //echo '<script>alert("Deleting items!");</script>';
+                                                  $sql_delete_product_items = "DELETE FROM product_item_orders WHERE product_commission_id = '$product_commission_id'";
+                                                  //$wax_status = "true";
+                                                  if ($connection->query($sql_delete_product_items) === TRUE) {
+                                                     
+                                                  } else {
+                                                      echo "Error: " . $sql_delete_product_items . "<br>" . $connection->error;
+                                                  } 
+
+                                          } else {
+                                          echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
+                                          }  
+                                      
+                              }
+                  }
+    } //Ending of if statement if product order with an existing customer_id exists
+
+          
+            if($wax_quantity != 0){
+                  $subtotal_computed_value = 499 * $wax_quantity;
+          
+                  $sql_wax_item = "INSERT INTO product_item_orders (product_commission_id,product_name,quantity,subtotal) 
+                                                  VALUES ('$product_commission_id', 'Wax', '$wax_quantity', '$subtotal_computed_value')";
+          
+                  if ($connection->query($sql_wax_item) === TRUE) {
+                      //echo "Product successfully registered - Wax<br>";
+                      $wax_status = "true";
+                      proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+                  } else {
+                      echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
+                  }                                 
+              }else{
+                  $wax_status = "true";
+                  proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+              }
+          
+              if($engine_shine_quantity != 0){
+                  $subtotal_computed_value = 499 * $engine_shine_quantity;
+          
+                  $sql_wax_item = "INSERT INTO product_item_orders (product_commission_id,product_name,quantity,subtotal) 
+                                                      VALUES ('$product_commission_id', 'Engine Shine', '$engine_shine_quantity', '$subtotal_computed_value')";
+
+                  if ($connection->query($sql_wax_item) === TRUE) {
+                      //echo "Product successfully registered - Engine Shine<br>";
+                      $engine_shine_status = "true";
+                      proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+                  } else {
+                      echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
+                  }
+              }else{
+                  $engine_shine_status = "true";
+                  proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+              }
+          
+              if($engine_degreaser_quantity != 0){
+                  $subtotal_computed_value = 499 * $engine_degreaser_quantity;
+          
+                  $sql_wax_item = "INSERT INTO product_item_orders (product_commission_id,product_name,quantity,subtotal) 
+                                                              VALUES ('$product_commission_id', 'Engine Degreaser', '$engine_degreaser_quantity', '$subtotal_computed_value')";
+                  if ($connection->query($sql_wax_item) === TRUE) {
+                      //echo "Product successfully registered - Engine Degreaser<br>";
+                      $engine_degrease_status = "true";
+                      proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+                  } else {
+                      echo "Error: " . $sql_wax_item . "<br>" . $connection->error;
+                  }
+                  
+              }else{
+                  $engine_degrease_status = "true";
+                  proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+              }
+          
+              if($freshener_quantity != 0){
+                  $subtotal_computed_value = 299 * $freshener_quantity;
+          
+                  $sql_wax_item = "INSERT INTO product_item_orders (product_commission_id,product_name,quantity,subtotal) 
+                                                            VALUES ('$product_commission_id', 'Freshener', '$freshener_quantity', '$subtotal_computed_value')";
+
+                  if ($connection->query($sql_wax_item) === TRUE) {
+                      //echo "Product successfully registered - Freshener<br>";
+                      $freshener_status = "true";
+                      proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+                  } else {
+                      echo "Error: " . $sql_wax_item . "<br>" . $conn->error;
+                      ?>
+              <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
+              <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+              <?php
+                  }
+          
+              }else{
+                  $freshener_status = "true"; 
+                  proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+              }
+          
+              if($water_remover_quantity != 0){
+                  $subtotal_computed_value = 299 * $water_remover_quantity;
+          
+                  $sql_wax_item = "INSERT INTO product_item_orders (product_commission_id,product_name,quantity,subtotal) 
+                                                                  VALUES ('$product_commission_id', 'Watermarks Remover', '$water_remover_quantity', '$subtotal_computed_value')";
+
+                  if ($connection->query($sql_wax_item) === TRUE) {
+                      //echo "Product successfully registered - Watermark<br>";
+                      $watermark_status = "true";
+                      proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+                  } else {
+                      echo "Error: " . $sql_wax_item . "<br>" . $conn->error;
+                      ?>
+              <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
+              <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+              <?php
+                  }
+              }else{
+                  $watermark_status = "true";
+                  proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
+              }
+             
+
+    
     
 
-    
     /*$sql = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,job_order_id,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
                                     VALUES ('John', 'Doe', 'john@example.com')";
 
@@ -358,28 +505,52 @@ function setAlert() {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }*/
 
-    function proceed_to_next_page($watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id){
+    function proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id){
         if($watermark_status && $freshener_status && $engine_degrease_status && $engine_shine_status && $wax_status){
             //echo "Location: ../CC-TrackerForm.php?job_listing_id=$job_listing_id";
             if($job_listing_id == 0){
+              if($edit_status_id == 0){    
+                echo "Not Linked Order | From My Queue";
                 echo "Successfuly Added!";
                 //header("Location: ../CC-client_dashboard.php");
+                //Goes to Dashboard (Independent Product Tracking Purchase)
+                header("Location: ../CC-client_dashboard.php");
                 ?>
         
-                <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php">
-                <?php
+        <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"> -->
+
+                Clear all local storage data.
+                <script>localStorage.clear();</script>
+
+                <?php 
+              }else{
+                echo "Not Linked Order | From Product Dashboard";
+         header("Location: ../CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id");
+              }
             }else{
-                echo "Successfuly Added!";
-                ?>
-        
-                <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-TrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>">
-                <?php
-                //header("Location: ../CC-TrackerForm.php?job_listing_id=".$job_listing_id);
+                  if($edit_status_id == 0){
+                    echo "Linked with Job Order | From Tracker Form";
+                    echo "Successfuly Added!";
+                    //Goes to Commission/Service TrackerForm Page
+                    //TEST IMPLEMENTATION:
+                    //header("Location: test_storage.php");
+                    ?>
+                    
+                    <!-- Uncomment when uploading to live servers -->
+                    <!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-TrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>"> -->
+                    <?php
+                     
+           header("Location: ../CC-TrackerForm.php?job_listing_id=".$job_listing_id);
+                  }else{
+                    echo "Linked with Job Order | From Product Dashboard";
+                 
+           header("Location: ../CC-client_dashboard_all_products.php?job_listing_id=$job_listing_id&edit_status_id=$edit_status_id");
+                  }
             }
-            
-            
+          
         }
     }
 
     
 ?>
+</html>

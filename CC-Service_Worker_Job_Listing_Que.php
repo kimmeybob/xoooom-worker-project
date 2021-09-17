@@ -24,6 +24,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="icon" href="images/logo.png">
+       
     </head>
 
     <style>
@@ -203,7 +205,7 @@ smaller than 650
     
     width: 100%;
     margin: 0 auto;
-    padding: 5px;
+    padding: 0px;
    
   
 }
@@ -215,7 +217,7 @@ smaller than 560
   body{
     width: 100%;
     margin: 0 auto;
-    padding: 5px;
+    padding: 0px;
    
   }
 }
@@ -274,7 +276,7 @@ smaller than 560
             }else{
                 echo "CC-client_dashboard.php";
             }
-            ?>" style="color: black;">Back</a></p></div><br>
+            ?>" style="color: #0279F6;text-decoration: none;">Back</a></p></div><br>
             <!--<div style="float:left; width: auto;position: relative;display: inline-block;font-size:11px;margin:0;"><p style="font-weight: bold;color: #868686;">Please fill up all the necessary fields for this product order</p></div>-->
         </div>
 
@@ -294,7 +296,7 @@ smaller than 560
                 echo "CUSTRK-".$job_listing_id;?>
             </div>
             <div style="float: right; width: auto;position: relative;display: inline-block;margin-right: 5%;">
-                <p style="width: auto;background: white;margin:0;overflow: hidden;"><a href="#Disabled_Click" style="color: black;text-decoration: none;">Edit (Disabled)</a></p>
+                <p style="width: auto;background: white;margin:0;overflow: hidden;"><a href="#Disabled_Click" style="color: black;text-decoration: none;"></a></p>
             </div>
         <div>
 
@@ -360,13 +362,14 @@ smaller than 560
             </div>
         </div>
 
-        <div style="margin-bottom: 5%;margin-top: 5%;margin-right: 5%;margin-left: 5%;width: 85%;position: relative;display: inline-block;border: 1px solid #D3D3D3;padding-bottom: 3.5%;padding-top: 2%;padding-right: 2.5%;padding-left: 2.5%;border-radius: 10px;">
+        <div style="margin-bottom: 5%;margin-top: 5%;margin-right: 5%;margin-left: 5%;width: 85%;position: relative;display: block;border: 1px solid #D3D3D3;padding-bottom: 3.5%;padding-top: 2%;padding-right: 2.5%;padding-left: 2.5%;border-radius: 10px;">
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;">
                 <label style="color: #868686;font-size: 12px;">Comment</label>
             </div>
             <br>
-            <div style=" width: auto;position: relative;display: inline-block;margin:0;padding-top: 1%;margin-bottom: 10%;"><?php 
-                echo $comment;?>
+            <div style=" width: auto;display: block;margin:0;padding-top: 1%;margin-bottom: 3%;inline-size: 100%;overflow-wrap: break-word;">
+            <p><?php 
+                echo $comment;?></p>
             </div>
         </div>
 
