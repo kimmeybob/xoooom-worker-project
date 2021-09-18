@@ -1,11 +1,16 @@
 <?php
 
   // Live Link (Uncomment for Production)
-  // $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"
+  /* $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php";*/
 
+  // Kim Development Playground Site
+  //https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php
+  /*$myqueue_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php";
+  $all_orders_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard_all_orders.php";*/
+  
   // Debug Link (Comment in Product)
   $myqueue_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard.php";
-  $all_orders_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_orders.php";
+  $all_orders_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_orders.php"; 
 
 
 

@@ -3,12 +3,22 @@
   // Live Link (Uncomment for Production)
   // $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"
 
+  // Kim Development Playground Site
+  //https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php
+  /*
+  $myqueue_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php?";
+  $all_orders_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard_all_orders.php?";
+  $tracker_form = "https://xoooomautospafleet.com/kim.development.site/CC-TrackerForm.php?job_listing_id=";
+  $all_products_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard_all_products.php?";
+  $edit_tracker_form = "https://xoooomautospafleet.com/kim.development.site/CC-Edittable-TrackerForm.php?";
+  */
+
   // Debug Link (Comment in Product)
   $myqueue_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard.php?";
   $all_orders_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_orders.php?";
-  $traker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-TrackerForm.php?job_listing_id=";
+  $tracker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-TrackerForm.php?job_listing_id=";
   $all_products_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_products.php?";
-  $edit_traker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-Edittable-TrackerForm.php?";
+  $edit_tracker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-Edittable-TrackerForm.php?";
 
 
 $job_listing_id = $_GET['job_listing_id'];
@@ -563,7 +573,7 @@ function setAlert() {
                   }else{
                     echo "Linked with Job Order | From Product Dashboard";
                   ?>
-                  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_traker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>">
+                  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>">
                   
                   <?php
                     echo "Should go to the edittable form.";

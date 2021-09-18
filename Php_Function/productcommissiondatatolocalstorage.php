@@ -128,8 +128,6 @@ echo "Product Order  ID: ".$edit_status_id."<br>".
 "Product Reason Promo: ".$products_promo."<br>".
 "Product Note: ".$products_note."<br>";
 
-
-// header("Location: ../CC-ProductPurchaseTrackerForm.php?job_listing_id=".$job_listing_id); 
 ?>
 <html>
 <head>
@@ -317,5 +315,4 @@ function setLocalStorageAndLeave(){
     })();
 }
 </script>
-<!-- <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-TrackerForm.php?job_listing_id=<?php echo $job_listing_id; ?>"> -->
 </html>

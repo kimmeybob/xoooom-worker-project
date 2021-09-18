@@ -1195,17 +1195,11 @@ function cache_all_form_date(){
     // Retrieve
     //SAMPLE: document.getElementById("result").innerHTML = localStorage.getItem("lastname");
     return true;
-  } else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-    return true;
-  }
-
-
-
-  
+   } else {
+     document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     return true;
+   }
 }
-
-
 </script>
 <script>
 function display_page_Loading(){
