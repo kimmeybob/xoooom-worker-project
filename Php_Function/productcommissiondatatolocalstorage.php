@@ -3,6 +3,7 @@
 $job_listing_id = $_GET['job_listing_id'];
 $edit_status_id = $_GET['edit_status_id'];
 
+require 'main_links_config.php';
 require '../Admin/database_config.php';
 
 echo "Job Order ID: ".$job_listing_id."<br>"
@@ -36,7 +37,7 @@ $products_subtotal = 0;
 
       if($check_job_orders_add_on_pre){
             while($row = mysqli_fetch_array($query_run_add_on_pre)){
-              if($row['product_commission_id'] == $edit_status_id){
+              if($row['cust_id'] == $job_listing_id){
                 //echo $row['subtotal']." | ".$job_order_date."<br>";
                
                 $products_subtotal += (int)$row['subtotal'];
@@ -309,7 +310,7 @@ function setLocalStorageAndLeave(){
             //window.location.replace('https://xoooomautospafleet.com/workerone/CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id; ?>&edit_status_id=<?php echo $edit_status_id; ?>')
             
             //REPLACE LOCAL HOST (TEST LINK)
-            window.location.replace('http://localhost/Xoooom%20Worker%20V.1/CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id; ?>&edit_status_id=<?php echo $edit_status_id; ?>')
+             window.location.replace('<?php echo $product_tracker_form;?>job_listing_id=<?php echo $job_listing_id; ?>&edit_status_id=<?php echo $edit_status_id; ?>')
        
          }
     })();

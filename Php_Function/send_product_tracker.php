@@ -9,8 +9,10 @@ $return_link = "dashboard";
 
 if(isset($_GET['edit_status_id'])) {
   // id index exists
-  if($_GET['edit_status_id'] != 0){
+  if($_GET['edit_status_id'] == 1){
       $edit_status_id = 1;
+  }else if($_GET['edit_status_id'] == 2){
+      $edit_status_id = 2;
   }
 }else{
   $edit_status_id = 0;
@@ -365,6 +367,18 @@ ob_start();
                   <script>localStorage.clear();</script>
 
                 <?php 
+              }else if($edit_status_id == 2){
+                echo "Not Linked Order | From All Products Dashboard";
+                echo "Successfuly Added!";
+                //Goes to Dashboard (Independent Product Tracking Purchase)
+                ?>
+        
+                 <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_products_dashboard'];?>">
+
+                  <!-- Clear all local storage data. -->
+                  <script>localStorage.clear();</script>
+
+                <?php 
               }else{
                 echo "Not Linked Order | From Product Dashboard";
               ?>
@@ -386,6 +400,19 @@ ob_start();
                      <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>">
                     <?php
                      
+                  }else if($edit_status_id == 2){
+                    echo "Linked with Job Order | From All Product Dashboard";
+                    echo "Successfuly Added!";
+                    //Goes to Commission/Service TrackerForm Page
+                    //TEST IMPLEMENTATION:
+                    //header("Location: test_storage.php");
+                    ?>
+                  <!--  <script>
+                      alert("Going to Tracker form: Edit Status ID: ");
+                    </script>  -->
+                     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_products_dashboard'];?>job_listing_id=<?php echo $job_listing_id;?>">
+                    <?php
+
                   }else{
                     echo "Linked with Job Order | From Product Dashboard";
                   ?>

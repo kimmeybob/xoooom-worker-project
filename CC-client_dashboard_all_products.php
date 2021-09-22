@@ -523,7 +523,7 @@ smaller than 560
                   if($row['date'] == $final_date){
                     
                 ?>
-                <a href="Php_Function/productcommissiondatatolocalstorage.php?job_listing_id=<?php echo $row['cust_id'];?>&edit_status_id=<?php echo $row['product_commission_id'];?>" style="text-decoration: none;">
+                <a href="Php_Function/productcommissiondatatolocalstorage.php?job_listing_id=<?php echo $row['cust_id'];?>&edit_status_id=2" style="text-decoration: none;">
                             <div style="background: <?php echo $card_color;?>;height: auto;border: 1px solid white;border-radius:10px 10px 0 0;padding: 4%;display: block;margin-top:1%;">
                             <div style="margin-bottom: 10%;">
                             <p style="float:left;width: auto;font-size: 18px;display: inline-block;margin:0;overflow: hidden;color: white;"><?php echo  "PROTRK-".$row['product_commission_id'] ; ?></p>

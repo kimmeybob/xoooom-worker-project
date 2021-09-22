@@ -8,7 +8,12 @@ $return_link = "dashboard";
 
 if(isset($_GET['edit_status_id'])) {
   // id index exists
-  $edit_status_id = 1;
+  if($_GET['edit_status_id'] == 1){
+    $edit_status_id = 1;
+  }else if($_GET['edit_status_id'] == 2){
+    $edit_status_id = 2;
+  }
+  
 
 }else{
   $edit_status_id = 0;
