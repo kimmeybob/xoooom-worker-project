@@ -22,6 +22,8 @@ if(isset($_GET['return_link'])) {
   $return_link = "dashboard";
 }
 
+echo "$edit_status_id";
+
 ?>
 <!DOCTYPE html>
 <html>

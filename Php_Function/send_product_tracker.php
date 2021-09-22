@@ -1,24 +1,6 @@
 <?php
 
-  // Live Link (Uncomment for Production)
-  // $myqueue_dashboard = "https://xoooomautospafleet.com/workerone/CC-client_dashboard.php"
-
-  // Kim Development Playground Site
-  //https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php
-  /*
-  $myqueue_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard.php?";
-  $all_orders_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard_all_orders.php?";
-  $tracker_form = "https://xoooomautospafleet.com/kim.development.site/CC-TrackerForm.php?job_listing_id=";
-  $all_products_dashboard = "https://xoooomautospafleet.com/kim.development.site/CC-client_dashboard_all_products.php?";
-  $edit_tracker_form = "https://xoooomautospafleet.com/kim.development.site/CC-Edittable-TrackerForm.php?";
-  */
-
-  // Debug Link (Comment in Product)
-  $myqueue_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard.php?";
-  $all_orders_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_orders.php?";
-  $tracker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-TrackerForm.php?job_listing_id=";
-  $all_products_dashboard = "http://localhost/Xoooom%20Worker%20V.1/CC-client_dashboard_all_products.php?";
-  $edit_tracker_form = "http://localhost/Xoooom%20Worker%20V.1/CC-Edittable-TrackerForm.php?";
+  require 'main_links_config.php';
 
 
 $job_listing_id = $_GET['job_listing_id'];
@@ -27,7 +9,9 @@ $return_link = "dashboard";
 
 if(isset($_GET['edit_status_id'])) {
   // id index exists
-  $edit_status_id = 1;
+  if($_GET['edit_status_id'] != 0){
+      $_GET['edit_status_id'] = 1;
+  }
 }else{
   $edit_status_id = 0;
 }
@@ -41,6 +25,7 @@ if(isset($_GET['return_link'])) {
 
 $Local_product_commission_id = $edit_status_id;
 
+echo "$edit_status_id";
 
 ob_start();
 ?>
@@ -119,7 +104,7 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 10px;
-  background: black;
+  /*background: black;*/
   
 }
 
@@ -194,7 +179,7 @@ smaller than 560
 </style>
 <body onload="timer_function()">
 <!-- LOADER DIV -->
-<div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
+<div style=" display: none;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
 <p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 
@@ -521,10 +506,6 @@ function setAlert() {
                   $watermark_status = "true";
                   proceed_to_next_page($edit_status_id,$watermark_status,$freshener_status, $engine_degrease_status,$engine_shine_status, $wax_status,$job_listing_id);
               }
-             
-
-    
-    
 
     /*$sql = "INSERT INTO product_commissions (date,personnel,product_name,quantity,note,job_order_id,subtotal,discount_percentage,promo_code,reason_promo,discount_value,vat,total) 
                                     VALUES ('John', 'Doe', 'john@example.com')";
@@ -573,7 +554,7 @@ function setAlert() {
                   }else{
                     echo "Linked with Job Order | From Product Dashboard";
                   ?>
-                  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>">
+                  <!-- <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>"> -->
                   
                   <?php
                     echo "Should go to the edittable form.";
