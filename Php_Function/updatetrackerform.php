@@ -87,7 +87,7 @@ if ($connection->query($sql_update_commission_form) === TRUE) {
     }else{
         ?>
         
-        <meta http-equiv="refresh" content="0;url=<?php echo $all_orders_dashboard;?>">
+         <meta http-equiv="refresh" content="0;url=<?php echo $all_orders_dashboard;?>"> 
         <?php
     }
     echo "Successfully Added to Database! ";
@@ -95,7 +95,7 @@ if ($connection->query($sql_update_commission_form) === TRUE) {
 echo "Error: " . $sql_update_commission_form . "<br>" . $conn->error;
 ?>
      <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=<?php echo $myqueue_dashboard?>">
+      <meta http-equiv="refresh" content="0;url=<?php echo $myqueue_dashboard?>"> 
      <?php
 }    
 
@@ -176,7 +176,7 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 10px;
-  /* background: black; */
+  background: black; 
   
 }
 

@@ -629,24 +629,11 @@ smaller than 560
 <br>
 
 <br>
-    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=true&return_link=<?php echo $return_link;?>" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
+    <a onclick="return cache_all_form_date()" href="CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=1&return_link=<?php echo $return_link;?>" style="display: block;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;width:80%;margin-left:10%;" id="bind_product_btn">Add Product Order</a>
       
     <div style="width: 80%;margin-left:10%;padding-bottom: 0.5%;background: white;margin-top: 4%;">
         <p style="float:left;display: block;width:49%;font-size: 14px;background: #0279F6;border:1px solid #0279F6;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: white;font-weight: bold;margin-left:0%;" id="myBtn">view order</p>
         <a onclick="return clear_products_local_data()" href="Php_Function/removeproductorder.php?job_listing_id=<?php echo $job_listing_id;?>" style="float:right;display: block;width:49%;font-size: 14px;background: white;border:1px solid #8E8E93;padding-bottom: 3%;padding-left: 2.5%;padding-right: 2.5%;padding-top: 3%;text-align: center;border-radius: 100px;color: #8E8E93;font-weight: bold;margin-left:0%;" id="remove_order_btn">remove order</a>
-        <script>
-          if(localStorage.getItem("products_order_bind_id") === null){
-            document.getElementById("remove_order_btn").style.pointerEvents = "none";
-            document.getElementById("remove_order_btn").style.background = "white";
-            document.getElementById("remove_order_btn").style.color = "#98989D";
-          
-          }else{
-            document.getElementById("remove_order_btn").style.pointerEvents = "auto";
-            document.getElementById("remove_order_btn").style.background = "#98989D";
-            document.getElementById("remove_order_btn").style.color = "white";
-           
-          }   
-        </script>
         <br>
     </div>
     
@@ -824,10 +811,9 @@ smaller than 560
       }
      
       
-      
       //Convert Products Discount Percentage to value
       if($products_discount_percentage == "none"){
-        $final_products_percentage_label = "10";
+        $final_products_percentage_label = "0";
       }elseif($products_discount_percentage == "ten"){
         $final_products_percentage_label = "10";
       }elseif($products_discount_percentage == "twenty"){
@@ -1457,6 +1443,7 @@ window.onbeforeunload = function() {
         var discounts = document.getElementById("discounts").value;
 
         var discount_percent_in_decimal;
+
         
         if(discounts == "none"){
          
@@ -1476,7 +1463,8 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 10%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "twenty"){
           discount_percent_in_decimal = 0.20;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1485,7 +1473,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 20%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "thirty"){
           discount_percent_in_decimal = 0.30;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1494,7 +1482,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 30%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "forty"){
           discount_percent_in_decimal = 0.40;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1503,7 +1491,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 40%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "fifty"){
           discount_percent_in_decimal = 0.50;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1512,7 +1500,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 50%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "sixty"){
           discount_percent_in_decimal = 0.60;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1521,16 +1509,17 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 60%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "seventy"){
           discount_percent_in_decimal = 0.70;
+
           service_discount = service_subtotal * discount_percent_in_decimal;
 
           document.getElementById("discount_label").innerHTML = "";
           document.getElementById("discount_label").innerHTML = "Discount - 70%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "eighty"){
           discount_percent_in_decimal = 0.80;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1539,7 +1528,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 80%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "ninety"){
           discount_percent_in_decimal = 0.90;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1548,7 +1537,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 90%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }else if(discounts == "onehundred"){
           discount_percent_in_decimal = 1.0;
           service_discount = service_subtotal * discount_percent_in_decimal;
@@ -1557,7 +1546,7 @@ window.onbeforeunload = function() {
           document.getElementById("discount_label").innerHTML = "Discount - 100%";
 
           document.getElementById("discount_amount").value = "";
-          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal);
+          document.getElementById("discount_amount").value = -(service_subtotal * discount_percent_in_decimal).toFixed(1);
         }
         subtotal_service_bill();
         
@@ -1872,5 +1861,20 @@ function cache_all_form_date(){
    }
 }
 </script>
+<script>
+          if(localStorage.getItem("products_order_bind_id") === null){
+          
+            document.getElementById("remove_order_btn").disabled = "true";
+            document.getElementById("remove_order_btn").style.background = "white";
+            document.getElementById("remove_order_btn").style.color = "#98989D";
+          
+          }else{
+           
+            document.getElementById("remove_order_btn").disabled = "false";
+            document.getElementById("remove_order_btn").style.background = "#98989D";
+            document.getElementById("remove_order_btn").style.color = "white";
+          
+          }   
+        </script>
 
 </html>

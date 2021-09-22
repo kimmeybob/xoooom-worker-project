@@ -1,9 +1,125 @@
 <?php
   
    require 'main_links_config.php';
-  
+
 ?>
 
+<?php
+
+$job_listing_id = $_GET['job_listing_id'];
+$date_serviced = $_POST['date_serviced'];
+$time_serviced = $_POST['time_serviced'];
+$name_of_personnel = $_POST['workers'];
+$tag_personnel = $_POST['tag_workers'];
+$car_size = $_POST['car_size_details'];
+$package_type  = $_POST['package_type'];
+$plate_number = $_POST['platenumber'];
+$discount = $_POST['discounts'];
+$promo_code = $_POST['promo'];
+$promo_reason = $_POST['promo_reason'];
+$additional_option = $_POST['additionals'];
+$note = $_POST['note'];
+//$time_finished = $_POST['time_done'];
+$discount_amount = $_POST['discount_amount'];
+$other_amount = $_POST['other_amount'];
+$vat = $_POST['package_vat_amount'];
+$total = $_POST['service_subtotal'];
+
+
+echo "
+job_listing_id: $job_listing_id<br>
+date_serviced: $date_serviced<br>
+time_serviced: $time_serviced<br>
+name_of_personnel: $name_of_personnel <br>
+tag_personnel: $tag_personnel <br>
+car_size: $car_size <br>
+package_type: $package_type <br>
+plate_number: $plate_number <br>
+discount: $discount <br>
+promo_code: $promo_code <br>
+promo_reason: $promo_reason <br>
+additional_option: $additional_option <br>
+note: $note<br>
+other_amount: $other_amount<br>
+discount_amount: $discount_amount <br>
+vat: $vat <br>
+total: $total <br>
+";
+
+require '../Admin/database_config.php';
+$AddToDatabase = false;
+$ChangeStatus = false;
+
+$final_promo_reason = "";
+$final_note = "";
+
+if($promo_reason == "" || $promo_reason == null){
+    $final_promo_reason = "none";
+}else{
+    $final_promo_reason = $promo_reason;
+}
+
+//checks if others status is none if yes then sets note to none.
+if($additional_option == "none"){
+    $final_note = "none";
+}else{
+    $final_note = $note;
+}
+
+
+
+
+$sql_add_commission_form = "INSERT INTO service_commissions (cust_id, date,personnel,partner,size,type,plate,discount,promo_code,discount_notes,additional_charge_type,additional_notes,discount_amount,others_amount,vat,total,time,edit_logs) 
+VALUES ('$job_listing_id', '$date_serviced', '$name_of_personnel', '$tag_personnel', '$car_size', '$package_type', '$plate_number', '$discount', 
+'$promo_code', '$final_promo_reason', '$additional_option', '$final_note', '$discount_amount', '$other_amount', '$vat', '$total','$time_serviced','none')";
+
+if ($connection->query($sql_add_commission_form) === TRUE) {
+    //header("Location: ../CC-client_dashboard.php");
+    $AddToDatabase = true;
+    proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id);
+    echo "Success! adding to database";
+    /** Success on adding to database*/
+} else {
+echo "Error: " . $sql_add_commission_form . "<br>" . $connection->error;
+?>
+     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
+     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
+     <?php
+    
+}     
+
+
+$sql_update_status = "update customer set status='complete' where customer_id = $job_listing_id;";
+ 
+     if ($connection->query($sql_update_status) === TRUE) {
+     $ChangeStatus = true;
+     proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id);
+     echo "Success! on changing status";
+     } else {
+     echo "Error: " . $sql_update_status . "<br>" . $conn->error;
+     ?>
+     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
+     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
+     <?php
+        
+     }
+
+
+function proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id){
+   
+    if($AddToDatabase && $ChangeStatus){
+        ?>
+        
+        <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
+        <?php echo $GLOBALS['myqueue_dashboard']; ?>
+        <?php
+        echo "Success!";
+        
+    }
+}
+ 
+
+?>
 
 <html>
 <head>
@@ -170,120 +286,3 @@ function setAlert() {
 }
 </script>
 </html>
-
-<?php
-
-$job_listing_id = $_GET['job_listing_id'];
-$date_serviced = $_POST['date_serviced'];
-$time_serviced = $_POST['time_serviced'];
-$name_of_personnel = $_POST['workers'];
-$tag_personnel = $_POST['tag_workers'];
-$car_size = $_POST['car_size_details'];
-$package_type  = $_POST['package_type'];
-$plate_number = $_POST['platenumber'];
-$discount = $_POST['discounts'];
-$promo_code = $_POST['promo'];
-$promo_reason = $_POST['promo_reason'];
-$additional_option = $_POST['additionals'];
-$note = $_POST['note'];
-//$time_finished = $_POST['time_done'];
-$discount_amount = $_POST['discount_amount'];
-$other_amount = $_POST['other_amount'];
-$vat = $_POST['package_vat_amount'];
-$total = $_POST['service_subtotal'];
-
-
-echo "
-job_listing_id: $job_listing_id<br>
-date_serviced: $date_serviced<br>
-time_serviced: $time_serviced<br>
-name_of_personnel: $name_of_personnel <br>
-tag_personnel: $tag_personnel <br>
-car_size: $car_size <br>
-package_type: $package_type <br>
-plate_number: $plate_number <br>
-discount: $discount <br>
-promo_code: $promo_code <br>
-promo_reason: $promo_reason <br>
-additional_option: $additional_option <br>
-note: $note<br>
-other_amount: $other_amount<br>
-discount_amount: $discount_amount <br>
-vat: $vat <br>
-total: $total <br>
-";
-
-require '../Admin/database_config.php';
-$AddToDatabase = false;
-$ChangeStatus = false;
-
-$final_promo_reason = "";
-$final_note = "";
-
-if($promo_reason == "" || $promo_reason == null){
-    $final_promo_reason = "none";
-}else{
-    $final_promo_reason = $promo_reason;
-}
-
-//checks if others status is none if yes then sets note to none.
-if($additional_option == "none"){
-    $final_note = "none";
-}else{
-    $final_note = $note;
-}
-
-
-
-
-$sql_add_commission_form = "INSERT INTO service_commissions (cust_id, date,personnel,partner,size,type,plate,discount,promo_code,discount_notes,additional_charge_type,additional_notes,discount_amount,others_amount,vat,total,time,edit_logs) 
-VALUES ('$job_listing_id', '$date_serviced', '$name_of_personnel', '$tag_personnel', '$car_size', '$package_type', '$plate_number', '$discount', 
-'$promo_code', '$final_promo_reason', '$additional_option', '$final_note', '$discount_amount', '$other_amount', '$vat', '$total','$time_serviced','none')";
-
-if ($connection->query($sql_add_commission_form) === TRUE) {
-    //header("Location: ../CC-client_dashboard.php");
-    $AddToDatabase = true;
-    proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id);
-    echo "Success! adding to database";
-    /** Success on adding to database*/
-} else {
-echo "Error: " . $sql_add_commission_form . "<br>" . $connection->error;
-?>
-     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
-     <?php
-    
-}     
-
-
-$sql_update_status = "update customer set status='complete' where customer_id = $job_listing_id;";
- 
-     if ($connection->query($sql_update_status) === TRUE) {
-     $ChangeStatus = true;
-     proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id);
-     echo "Success! on changing status";
-     } else {
-     echo "Error: " . $sql_update_status . "<br>" . $conn->error;
-     ?>
-     <script>alert("Something went wrong! Please check your internet connection. You will be returned to the dashboard.");</script>   
-     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
-     <?php
-        
-     }
-
-
-function proccesses_done($AddToDatabase,$ChangeStatus, $job_listing_id){
-   
-    if($AddToDatabase && $ChangeStatus){
-        ?>
-        
-        <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
-        <?php echo $GLOBALS['myqueue_dashboard']; ?>
-        <?php
-        echo "Success!";
-        
-    }
-}
- 
-
-?>

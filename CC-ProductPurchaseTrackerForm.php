@@ -22,8 +22,6 @@ if(isset($_GET['return_link'])) {
   $return_link = "dashboard";
 }
 
-echo "$edit_status_id";
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -308,24 +306,7 @@ smaller than 560
 
       <label style="color: black;font-size: 18px;font-weight: bold;">Products</label><br/>
 <div style="background: white;height: 60%;">
-  <!-- //Column Header Labels -->
-    <!-- <div style="background: white;width: 100%;padding: 2%;display: inline-block;border: 1px solid #E5E5E5;text-align: left;">
-        <div style="background: white;width: 30%;float:left;display: inline-block;">
-            <span style="font-size: 14px;">Product Name</span>
-        </div> 
-        <div style="background: white;width: 20%;float:left;display: inline-block;">
-            <span style="font-size: 14px;">Volume</span>
-        </div> 
-        <div style="background: white;width: 15%;float:left;display: inline-block;">
-            <span style="font-size: 14px;">Price</span>
-        </div> 
-        <div style="background: white;width: 20%;float:left;display: inline-block;">
-            <span style="font-size: 14px;">Quantity</span>
-        </div> 
-        <div style="background: white;width: 15%;float:left;display: inline-block;">
-            <span style="font-size: 14px;">Subtotal</span>
-        </div> 
-    </div> -->
+ 
     <div style="background: white;height: 100px;border: 1px solid #F0F0F0;padding: 3%;padding-bottom: 5%;">
       <div style="background: white;float: left;display: inline-block;width:20%;text-align: center;height: 100%;">
           <!-- Insert Image here #0179F1; -->

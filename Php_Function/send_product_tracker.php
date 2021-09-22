@@ -10,7 +10,7 @@ $return_link = "dashboard";
 if(isset($_GET['edit_status_id'])) {
   // id index exists
   if($_GET['edit_status_id'] != 0){
-      $_GET['edit_status_id'] = 1;
+      $edit_status_id = 1;
   }
 }else{
   $edit_status_id = 0;
@@ -29,173 +29,6 @@ echo "$edit_status_id";
 
 ob_start();
 ?>
-<html>
-<head>
-    <title>Update Form Submission Process</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-<style>
-/* ANIMATION LOADER STYLE */
-.lds-ellipsis {
-  /* display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px; */
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 45%;
-  width: 13px;
-  margin-left: 40%;
-  height: 13px;
-  border-radius: 50%;
-  background: white;
- 
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
-}
-
-
-html{
- 
-}
-
-body {
-  width: 100%;
-  margin: 0 auto;
-  padding: 10px;
-  /*background: black;*/
-  
-}
-
-/************************************************************************************
-smaller than 1080
-*************************************************************************************/
-@media screen and (max-width: 4080px) {
-body{
-
-    width: 500px;
-    margin: 0 auto;
-    padding: 50px;
-}
-html{
-  background: #F0F0F0;
-  margin-top: 2%;
-}
-}
-
-/************************************************************************************
-smaller than 1080
-*************************************************************************************/
-@media screen and (max-width: 1024px) {
-body{
-
-    width: 500px;
-    margin: 0 auto;
-    padding: 50px;
-}
-}
-
-/************************************************************************************
-smaller than 980
-*************************************************************************************/
-@media screen and (max-width: 980px) {
-body{
-
-    width: 500px;
-    margin: 0 auto;
-    padding: 10px;
- 
-  
-}
-}
-
-/************************************************************************************
-smaller than 650
-*************************************************************************************/
-@media screen and (max-width: 650px) {
-  body{
-    
-    width: 100%;
-    margin: 0 auto;
-    padding: 5px;
-   
-  
-}
-}
-/************************************************************************************
-smaller than 560
-*************************************************************************************/
-@media screen and (max-width: 480px) {
-  body{
-    width: 100%;
-    margin: 0 auto;
-    padding: 5px;
-   
-  }
-}
-
-
-</style>
-<body onload="timer_function()">
-<!-- LOADER DIV -->
-<div style=" display: none;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
-<p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
-<p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
-
-
-</body>
-<script>
-
-function timer_function() {
-    setTimeout(setAlert, 10000);
-}
-function setAlert() {
-    document.getElementById("slow_internet_display").style.display = "block";
-}
-
-
-</script>
 
 <?php
      $wax_status = "false";
@@ -381,7 +214,7 @@ function setAlert() {
                           
                 }else{      
                             $Edit_check = "true";
-                           // echo '<script>alert("Deleted called!");</script>';
+                            // echo '<script>alert("Deleted called!");</script>';
                             
                             if($Edit_check){
                                           //If custoemr has an existing product order. Update existing transaction order.
@@ -526,7 +359,7 @@ function setAlert() {
                 //Goes to Dashboard (Independent Product Tracking Purchase)
                 ?>
         
-                  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
+                 <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['myqueue_dashboard'];?>">
 
                   <!-- Clear all local storage data. -->
                   <script>localStorage.clear();</script>
@@ -535,7 +368,7 @@ function setAlert() {
               }else{
                 echo "Not Linked Order | From Product Dashboard";
               ?>
-                  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_orders_dashboard'];?>">
+                   <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_orders_dashboard'];?>">
               
             <?php
               }
@@ -547,14 +380,19 @@ function setAlert() {
                     //TEST IMPLEMENTATION:
                     //header("Location: test_storage.php");
                     ?>
-                    
-                    <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>">
+                  <!--  <script>
+                      alert("Going to Tracker form: Edit Status ID: ");
+                    </script>  -->
+                     <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>">
                     <?php
                      
                   }else{
                     echo "Linked with Job Order | From Product Dashboard";
                   ?>
-                  <!-- <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>"> -->
+                 <!--  <script>
+                      alert("Going to Edittable-Tracker form: Edit Status ID: ");
+                    </script> -->
+                   <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['edit_tracker_form'];?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $GLOBALS['return_link'];?>"> 
                   
                   <?php
                     echo "Should go to the edittable form.";
@@ -566,4 +404,171 @@ function setAlert() {
 
     
 ?>
+<html>
+<head>
+    <title>Update Form Submission Process</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+/* ANIMATION LOADER STYLE */
+.lds-ellipsis {
+  /* display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px; */
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 45%;
+  width: 13px;
+  margin-left: 40%;
+  height: 13px;
+  border-radius: 50%;
+  background: white;
+ 
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+
+html{
+ 
+}
+
+body {
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  background: black;
+  
+}
+
+/************************************************************************************
+smaller than 1080
+*************************************************************************************/
+@media screen and (max-width: 4080px) {
+body{
+
+    width: 500px;
+    margin: 0 auto;
+    padding: 50px;
+}
+html{
+  background: #F0F0F0;
+  margin-top: 2%;
+}
+}
+
+/************************************************************************************
+smaller than 1080
+*************************************************************************************/
+@media screen and (max-width: 1024px) {
+body{
+
+    width: 500px;
+    margin: 0 auto;
+    padding: 50px;
+}
+}
+
+/************************************************************************************
+smaller than 980
+*************************************************************************************/
+@media screen and (max-width: 980px) {
+body{
+
+    width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+ 
+  
+}
+}
+
+/************************************************************************************
+smaller than 650
+*************************************************************************************/
+@media screen and (max-width: 650px) {
+  body{
+    
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+   
+  
+}
+}
+/************************************************************************************
+smaller than 560
+*************************************************************************************/
+@media screen and (max-width: 480px) {
+  body{
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+   
+  }
+}
+
+
+</style>
+<body onload="timer_function()">
+<!-- LOADER DIV -->
+<div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
+<p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
+<p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
+
+
+</body>
+<script>
+
+function timer_function() {
+    setTimeout(setAlert, 10000);
+}
+function setAlert() {
+    document.getElementById("slow_internet_display").style.display = "block";
+}
+
+
+</script>
 </html>
