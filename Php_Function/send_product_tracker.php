@@ -25,6 +25,13 @@ if(isset($_GET['return_link'])) {
   $return_link = "dashboard";
 }
 
+if(isset($_GET['unbinded_commission_id'])) {
+  // id index exists
+  $unbinded_commission_id = $_GET['unbinded_commission_id'];
+}else{
+  $unbinded_commission_id = "0";
+}
+
 $Local_product_commission_id = $edit_status_id;
 
 echo "$edit_status_id";
@@ -194,14 +201,14 @@ ob_start();
                                   echo "Error: " . $query_product_customer_check . "<br>" . $connection->error;
                                 }
                           }else{
-                            echo "Existing Unbinded Product Purchase Order.";
+                            echo "Existing Unbinded Product Purchase Order Editing Product with 0 as ID";
                             //Product does have a commission ID. Product order will be updated based on the product commission id
-                            $sql_product_commission_transaction = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat='0',total='$total' where product_commission_id='$Local_product_commission_id'";
-
+                            $sql_product_commission_transaction = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat=99,total='$total' where product_commission_id='$unbinded_commission_id'";
+                              echo "<br><br>Unbinded Discount Details should be updated: Local ID Value: $Local_product_commission_id<br><br>";
                                     if ($connection->query($sql_product_commission_transaction) === TRUE) {
 
                                         //echo '<script>alert("Deleting items!");</script>';
-                                        $sql_delete_product_items = "DELETE FROM product_item_orders WHERE product_commission_id = '$Local_product_commission_id'";
+                                        $sql_delete_product_items = "DELETE FROM product_item_orders WHERE product_commission_id = '$product_commission_id'";
                                         //$wax_status = "true";
                                         if ($connection->query($sql_delete_product_items) === TRUE) {
                                           
@@ -373,7 +380,7 @@ ob_start();
                 //Goes to Dashboard (Independent Product Tracking Purchase)
                 ?>
         
-                 <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_products_dashboard'];?>">
+                <!--  <meta http-equiv="refresh" content="0;url=<?php echo $GLOBALS['all_products_dashboard'];?>"> -->
 
                   <!-- Clear all local storage data. -->
                   <script>localStorage.clear();</script>
@@ -506,7 +513,7 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 10px;
-  background: black;
+ /* background: black;*/
   
 }
 
@@ -581,7 +588,7 @@ smaller than 560
 </style>
 <body onload="timer_function()">
 <!-- LOADER DIV -->
-<div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
+<div style=" display: none;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
 <p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 

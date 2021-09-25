@@ -5,6 +5,7 @@ date_default_timezone_set('Asia/Manila');
 
 $edit_status_id = 0;
 $return_link = "dashboard";
+$unbinded_commission_id = 0;
 
 if(isset($_GET['edit_status_id'])) {
   // id index exists
@@ -13,8 +14,13 @@ if(isset($_GET['edit_status_id'])) {
   }else if($_GET['edit_status_id'] == 2){
     $edit_status_id = 2;
   }
-  
 
+if(isset($_GET['unbinded_commission_id'])) {
+  // id index exists
+    $unbinded_commission_id = $_GET['unbinded_commission_id'];
+  }
+  
+  
 }else{
   $edit_status_id = 0;
 }
@@ -239,7 +245,7 @@ smaller than 560
             Product Order ID
         </div>
         <!-- LINK:  -->
-        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $return_link;?>" method="post">
+        <form onsubmit="return submission_check()" action="Php_Function/send_product_tracker.php?job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&return_link=<?php echo $return_link;?><?php if($job_listing_id == 0){ echo "&unbinded_commission_id=$unbinded_commission_id"; }else{}?>" method="post">
         <div>
             <div style="float:left; width: auto;position: relative;display: inline-block;margin:0;margin-left: 5%;">
            
@@ -250,7 +256,18 @@ smaller than 560
                   echo "PROTRK-$job_listing_id";
                 }
                  ?>" readonly>  
+ 
             </div>
+           <?php
+            if($job_listing_id == "0" && $edit_status_id != "0"){
+           ?>
+           <a href="Php_Function/removeproductorder.php?job_listing_id=<?php echo $job_listing_id;?>&unbinded_commission_id=<?php echo "$unbinded_commission_id";?>"><span style="background:white;float: right;margin-right: 5%;color: red;border: 1px solid #FF375F;padding-left:5%;padding-right:5%;padding-top:1%;padding-bottom: 2%;border-radius: 100px;color: #FF375F;font-weight:bold;font-size: 14px">Delete Order</span></a>
+           <?php
+            }else{
+
+            }
+           ?>
+
             <div style="float: right; width: auto;position: relative;display: inline-block;margin-right: 5%;">
                 <p style="width: auto;background: white;margin:0;overflow: hidden;"><a href="#back" style="color: black;font-size: 14px"></a></p>
             </div>
@@ -823,7 +840,7 @@ smaller than 560
 
     <br>
     <div style="width: 100%; height: 0.1vh; background: #DCDCDC;overflow:hidden;margin-bottom: 10%;"></div>
-      <input class="btn btn-primary btn-lg btn-block" style="background-color:black;border-color:black;font-size:16px;border-radius: 100px;" type="submit" value="Submit"/>
+      <input class="btn btn-primary btn-lg btn-block" style="background-color:black;border-color:black;font-size:16px;border-radius: 100px;" id="product_submit_btn" type="submit" value="Submit"/>
     </form>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -1148,7 +1165,7 @@ function engine_shine_compute(){
 function total_price_compute(){
   document.getElementById("additional_sub_total").value = "";
   document.getElementById("additional_sub_total").value = (parseInt(subtotal_amount-discount_amount));
-  
+
 }
 
 function subtotal_compute(){

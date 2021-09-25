@@ -1,4 +1,5 @@
 <?php 
+
     if(!isset($_SESSION)) 
     { 
         session_start(); 
@@ -444,18 +445,24 @@ smaller than 560
   <br>
   <br>
  
+<!-- Version Displays -->
+<?php 
+  include 'header_version.php';
+?>
+
   <a style="color: white;color: #282828;pointer-event: none;cursor: default;" href="#">My Queue</a>
   <a onclick="display_page_Loading()" style="color: white;" href="CC-client_dashboard_all_orders.php">All Jobs</a>
   <a onclick="display_page_Loading()" style="color: white;" href="CC-client_dashboard_all_products.php">All Products</a>
   <a style="color: #282828;pointer-event: none;cursor: default;" href="#">Logout (Disabled)</a>
   <br>
-  <br><a href="#" style="color: #818181;font-size: 12px;">C-Dash Rev 1.2-7.9.21</a>
+ <br><a href="#" style="color: #818181;font-size: 12px;">CC-Dashboard<br> <?php echo "$version_display";?></a>
 </div>
 
 <!-- LOADER DIV -->
 <div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
-<span style="font-size:26px;cursor:pointer;background: white;" onclick="openNav()">&#9776;&nbsp&nbsp <span style="font-size: 22px;font-weight: bold;background: white;color: black;">XOOOOM AUTOSPA</span></span>
+
+<span style="font-size:26px;cursor:pointer;background: white;" onclick="openNav()">&#9776;&nbsp&nbsp <span style="font-size: 22px;font-weight: bold;background: white;color: black;"><?php echo "$header_title";?></span></span>
            
      </div>
 

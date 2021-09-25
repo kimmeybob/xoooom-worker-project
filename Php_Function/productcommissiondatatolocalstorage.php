@@ -2,6 +2,12 @@
 
 $job_listing_id = $_GET['job_listing_id'];
 $edit_status_id = $_GET['edit_status_id'];
+$unbinded_commission_id = 0;
+
+if(isset($_GET['unbinded_commission_id'])) {
+  // id index exists
+    $unbinded_commission_id = $_GET['unbinded_commission_id'];
+  }
 
 require 'main_links_config.php';
 require '../Admin/database_config.php';
@@ -305,12 +311,11 @@ function setLocalStorageAndLeave(){
             setTimeout(one, 30);
          } else {
              
-            
             // LIVE LINK
             //window.location.replace('https://xoooomautospafleet.com/workerone/CC-ProductPurchaseTrackerForm.php?job_listing_id=<?php echo $job_listing_id; ?>&edit_status_id=<?php echo $edit_status_id; ?>')
             
             //REPLACE LOCAL HOST (TEST LINK)
-             window.location.replace('<?php echo $product_tracker_form;?>job_listing_id=<?php echo $job_listing_id; ?>&edit_status_id=<?php echo $edit_status_id; ?>')
+             window.location.replace('<?php echo $product_tracker_form;?>job_listing_id=<?php echo $job_listing_id;?>&edit_status_id=<?php echo $edit_status_id;?>&unbinded_commission_id=<?php echo $unbinded_commission_id;?>')
        
          }
     })();
