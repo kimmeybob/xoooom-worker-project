@@ -513,7 +513,7 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 10px;
- /* background: black;*/
+  background: black;
   
 }
 
@@ -588,7 +588,7 @@ smaller than 560
 </style>
 <body onload="timer_function()">
 <!-- LOADER DIV -->
-<div style=" display: none;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
+<div style=" display: block;background: black;top:0;left: 0; position:fixed;z-index: 10;width: 100%;height: 100%;margin: 0;opacity: 0.95;" id="loader_visuals" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> 
 <p style="z-index: 11;color: white;top:50%;left: 0; position:fixed;display: block;width: 100%;text-align: center;font-size: 16px;">Please wait while data is being sent to the server.</p>
 <p id="slow_internet_display" style="z-index: 11;color: white;top:54%;left: 0; position:fixed;display: none;background: black;width: 100%;text-align: center;font-size: 12px;">You may be experiencing slow internet connections.</p> 
 

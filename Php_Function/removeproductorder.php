@@ -66,13 +66,13 @@ if(isset($_GET['unbinded_commission_id'])) {
                                     if ($connection->query($sql_delete_unbinded_product_items) === TRUE) {
                                         echo "deleted product_item_order of ".$unbinded_commission_id;
                                       ?>
-                                       <!--  <meta http-equiv="refresh" content="0;url=<?php echo $all_products_dashboard;?>?">  -->
+                                        <meta http-equiv="refresh" content="0;url=<?php echo $all_products_dashboard;?>?"> 
                                       <?php 
                                     } else {
                                         echo "Error: " . $sql_delete_unbinded_product_items . "<br>" . $connection->error;
                                     } 
                                       ?>
-                                        <!-- <meta http-equiv="refresh" content="0;url=<?php echo $all_products_dashboard;?>?">  -->
+                                        <meta http-equiv="refresh" content="0;url=<?php echo $all_products_dashboard;?>?"> 
                                      <?php 
 
                             } else {
@@ -93,7 +93,10 @@ if(isset($_GET['unbinded_commission_id'])) {
                       if ($connection->query($sql_wax_item) === TRUE) {
 
                         //<!-- LIVE META TAG-->
-                        // <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-TrackerForm.php?job_listing_id=<?php echo $job_listing_id; >">
+                        ?>
+                        <meta http-equiv="refresh" content="0;url=<?php echo "$tracker_form";?>?job_listing_id=<?php echo $job_listing_id; ?>">
+
+                        <?php 
                         
                       //echo "Product successfully registered - Wax<br>";
                       //echo '<script>alert("Deleting items!");</script>';
@@ -110,8 +113,6 @@ if(isset($_GET['unbinded_commission_id'])) {
                       
                       
                       } else {
-                      //<!-- LIVE META TAG-->
-                      // <meta http-equiv="refresh" content="0;url=https://xoooomautospafleet.com/workerone/CC-TrackerForm.php?job_listing_id=<?php echo $job_listing_id; >">
                       ?>
                        <meta http-equiv="refresh" content="0;url=<?php echo $tracker_form;?>job_listing_id=<?php echo $job_listing_id;?>">
                       <?php 
