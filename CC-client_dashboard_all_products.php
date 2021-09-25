@@ -529,7 +529,7 @@ smaller than 560
                   if($row['date'] == $final_date){
                     
                 ?>
-                <a href="Php_Function/productcommissiondatatolocalstorage.php?job_listing_id=<?php echo $row['cust_id'];?>&edit_status_id=2&<?php if($row['cust_id'] == 0){ ?>unbinded_commission_id=<?php echo $row['product_commission_id'];}?>" style="text-decoration: none;">
+                <a href="Php_Function/productcommissiondatatolocalstorage.php?job_listing_id=<?php echo $row['cust_id'];?>&edit_status_id=2&<?php if($row['cust_id'] == 0){ ?>unbinded_commission_id=<?php echo $row['product_commission_id'];}?>" style="text-decoration: none;<?php if($final_date == $current_date){}else{echo "pointer-events: none";} ?>">
                             <div style="background: <?php echo $card_color;?>;height: auto;border: 1px solid white;border-radius:10px 10px 0 0;padding: 4%;display: block;margin-top:1%;">
                             <div style="margin-bottom: 10%;">
                             <p style="float:left;width: auto;font-size: 18px;display: inline-block;margin:0;overflow: hidden;color: white;"><?php echo  "PROTRK-".$row['product_commission_id'] ; ?></p>
@@ -694,7 +694,7 @@ function setDataToModal(subtotal, discount_percentage,discount_value,vat, total,
   //check if data os NaN
   if(product_commission_id == 0){
     document.getElementById("collapsible_btn").style.display = "none";
-    document.getElementById("hint_service_commissiont_labels").innerHTML = "<i class='fa fa-info-circle' style='font-size: 14px;'></i> Product order does not have a linked job order.";
+    document.getElementById("hint_service_commissiont_labels").innerHTML = "<i class='fa fa-info-circle' style='font-size: 14px;'></i> Product order has no linked job order.";
     service_final_amount = 0
   }else{
 

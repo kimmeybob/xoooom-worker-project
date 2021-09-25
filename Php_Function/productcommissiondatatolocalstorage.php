@@ -43,32 +43,65 @@ $products_subtotal = 0;
 
       if($check_job_orders_add_on_pre){
             while($row = mysqli_fetch_array($query_run_add_on_pre)){
-              if($row['cust_id'] == $job_listing_id){
-                //echo $row['subtotal']." | ".$job_order_date."<br>";
-               
-                $products_subtotal += (int)$row['subtotal'];
-                $products_customer_name = $row['customer_name'];
-                $products_contact_number = $row['customer_contact_number'];
-                $products_discount_percentage = $row['discount_percentage'];
-                $products_discount_amount = $row['discount_value'];
-                $products_vat = $row['vat'];
-                $products_total = $row['total'];
-                $products_date = $row['date'];
-                $products_workers = $row['personnel'];
-                if($row['product_name'] == "Wax"){
-                  $products_wax_quantity = (int)$row['quantity'];
-                }else if($row['product_name'] == "Engine Shine"){
-                  $products_engine_shine_quantity = (int)$row['quantity'];
-                }else if($row['product_name'] == "Engine Degreaser"){
-                  $products_engine_degreaser_quantity = $row['quantity'];
-                }else if($row['product_name'] == "Freshener"){
-                  $products_freshener_quantity = (int)$row['quantity'];
-                }else if($row['product_name'] == "Watermarks Remover"){
-                  $products_water_remover_quantity = (int)$row['quantity'];
+                if($job_listing_id == 0){
+                      echo "Product is Unbinded or Cust_id = 0 | ";
+                      if($row['product_commission_id'] == $unbinded_commission_id){
+             
+                      $products_subtotal += (int)$row['subtotal'];
+                      $products_customer_name = $row['customer_name'];
+                      $products_contact_number = $row['customer_contact_number'];
+                      $products_discount_percentage = $row['discount_percentage'];
+                      $products_discount_amount = $row['discount_value'];
+                      $products_vat = $row['vat'];
+                      $products_total = $row['total'];
+                      $products_date = $row['date'];
+                      $products_workers = $row['personnel'];
+                      
+                      if($row['product_name'] == "Wax"){
+                          $products_wax_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Engine Shine"){
+                          $products_engine_shine_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Engine Degreaser"){
+                          $products_engine_degreaser_quantity = $row['quantity'];
+                      }else if($row['product_name'] == "Freshener"){
+                          $products_freshener_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Watermarks Remover"){
+                          $products_water_remover_quantity = (int)$row['quantity'];
+                      }
+                          $products_promo = $row['reason_promo'];
+                          $products_note = $row['note'];
+                      }
+
+                }else{
+                      if($row['cust_id'] == $job_listing_id){
+                      //echo $row['subtotal']." | ".$job_order_date."<br>";
+             
+                      $products_subtotal += (int)$row['subtotal'];
+                      $products_customer_name = $row['customer_name'];
+                      $products_contact_number = $row['customer_contact_number'];
+                      $products_discount_percentage = $row['discount_percentage'];
+                      $products_discount_amount = $row['discount_value'];
+                      $products_vat = $row['vat'];
+                      $products_total = $row['total'];
+                      $products_date = $row['date'];
+                      $products_workers = $row['personnel'];
+                      
+                      if($row['product_name'] == "Wax"){
+                          $products_wax_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Engine Shine"){
+                          $products_engine_shine_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Engine Degreaser"){
+                          $products_engine_degreaser_quantity = $row['quantity'];
+                      }else if($row['product_name'] == "Freshener"){
+                          $products_freshener_quantity = (int)$row['quantity'];
+                      }else if($row['product_name'] == "Watermarks Remover"){
+                          $products_water_remover_quantity = (int)$row['quantity'];
+                      }
+                          $products_promo = $row['reason_promo'];
+                          $products_note = $row['note'];
+                      }
+
                 }
-                $products_promo = $row['reason_promo'];
-                $products_note = $row['note'];
-            }
             } 
         
 

@@ -203,7 +203,7 @@ ob_start();
                           }else{
                             echo "Existing Unbinded Product Purchase Order Editing Product with 0 as ID";
                             //Product does have a commission ID. Product order will be updated based on the product commission id
-                            $sql_product_commission_transaction = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat=99,total='$total' where product_commission_id='$unbinded_commission_id'";
+                            $sql_product_commission_transaction = "update product_commissions set date='$final_date_string',personnel='$personnel',note='$note',customer_name='$customer_name',customer_contact_number='$customernumber',discount_percentage='$discount_percent',promo_code='$promo_code_value',reason_promo='$promo_reason_value',discount_value='$discount_value',vat='$vat',total='$total' where product_commission_id='$unbinded_commission_id'";
                               echo "<br><br>Unbinded Discount Details should be updated: Local ID Value: $Local_product_commission_id<br><br>";
                                     if ($connection->query($sql_product_commission_transaction) === TRUE) {
 
